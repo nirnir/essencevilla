@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guest Guide — Matos Essence Villa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/site.js"></script>
+  <style>
+    .guide-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .sidenav { position: sticky; top: 80px; }
+    .sidenav h5 { font-family:'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; font-weight: 500; }
+    .sidenav a { display: block; padding: 8px 0; color: var(--ink-soft); border-bottom: 1px solid var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .sidenav a:hover { color: var(--accent); }
+    .sidenav a.active { color: var(--accent); }
+
+    .guide-section { padding: 24px 0 64px; border-bottom: 1px solid var(--rule); margin-bottom: 64px; }
+    .guide-section:last-child { border-bottom: none; }
+    .guide-section h2 { font-size: clamp(36px, 4vw, 60px); margin-bottom: 24px; }
+    .guide-section h2 .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.22em; color: var(--accent); display: block; margin-bottom: 14px; font-weight: 500; }
+
+    /* Wi-Fi card */
+    .wifi {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 36px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+      align-items: center;
+    }
+    .wifi .field { border-bottom: 1px solid var(--rule); padding-bottom: 14px; margin-bottom: 18px; }
+    .wifi .field:last-child { margin-bottom: 0; }
+    .wifi .field .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+    .wifi .field .v { font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.04em; color: var(--ink); }
+    .wifi .qr { aspect-ratio: 1; border: 1px solid var(--rule); background: var(--bg); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    .wifi .qr .pattern {
+      width: 70%; height: 70%;
+      background:
+        radial-gradient(circle at center, var(--ink) 12%, transparent 12%) 0 0/14px 14px,
+        repeating-linear-gradient(0deg, transparent 0 8px, var(--rule) 8px 9px);
+      mask: linear-gradient(black, black);
+    }
+
+    /* Appliance card */
+    .appliances {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .app-card {
+      padding: 32px 28px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .app-card:nth-child(2n) { border-right: none; }
+    .app-card .top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .app-card .top .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .app-card h3 { font-size: 32px; margin-bottom: 14px; }
+    .app-card ol { padding-left: 18px; margin: 0; }
+    .app-card ol li { padding: 6px 0; color: var(--ink-soft); font-size: 17px; }
+    .app-card .tip { margin-top: 14px; padding: 10px 14px; background: var(--bg-2); border-left: 2px solid var(--accent); font-style: italic; color: var(--ink-soft); font-size: 16px; }
+
+    /* Checkout list */
+    .checkout {
+      counter-reset: co;
+      list-style: none; padding: 0; margin: 0;
+    }
+    .checkout li {
+      display: grid; grid-template-columns: 40px 1fr auto; gap: 20px;
+      padding: 18px 0; border-bottom: 1px solid var(--rule);
+      align-items: center;
+    }
+    .checkout li::before {
+      counter-increment: co;
+      content: counter(co, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em;
+    }
+    .checkout li .time { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+    .checkout li .what { font-size: 19px; color: var(--ink); }
+
+    /* Emergency strip */
+    .ec-strip {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 36px 0;
+      margin: 32px 0;
+    }
+    .ec-strip .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .ec-strip h5 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 10px; font-weight: 500; }
+    .ec-strip .name { font-family: 'Italiana', serif; font-size: 28px; line-height: 1.1; }
+    .ec-strip .ph { color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.06em; margin-top: 6px; display: block; }
+
+    @media (max-width: 900px) {
+      .guide-layout { grid-template-columns: 1fr; gap: 32px; }
+      .sidenav { position: static; }
+      .wifi { grid-template-columns: 1fr; }
+      .appliances { grid-template-columns: 1fr; }
+      .app-card { border-right: none; }
+      .ec-strip .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Folio III · For Guests in Residence</span>
+      <h1 class="title display">The house, briefly<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">explained.</em></h1>
+      <p class="sub">Wi-Fi, the pool, the steam room, the oven, the sound system — and what to do when something doesn't do what you'd like. A short guide, kept open in the kitchen drawer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="guide-layout">
+        <aside class="sidenav">
+          <h5>In this guide</h5>
+          <a href="#wifi">§ 01 — Wi-Fi &amp; codes</a>
+          <a href="#pool">§ 02 — Pool &amp; spa</a>
+          <a href="#kitchen">§ 03 — Kitchen</a>
+          <a href="#tv">§ 04 — TVs &amp; Sound</a>
+          <a href="#games">§ 05 — Xbox &amp; play</a>
+          <a href="#robots">§ 06 — iRobots</a>
+          <a href="#climate">§ 07 — Climate</a>
+          <a href="#checkout">§ 08 — Departure</a>
+          <a href="#help">§ 09 — Help</a>
+        </aside>
+
+        <div>
+          <!-- WIFI -->
+          <div class="guide-section" id="wifi">
+            <h2><span class="num">§ 01</span>Wi-Fi &amp; access</h2>
+            <div class="wifi">
+              <div>
+                <div class="field">
+                  <span class="k">Network</span>
+                  <span class="v">Ehrlich-Essence</span>
+                </div>
+                <div class="field">
+                  <span class="k">Password</span>
+                  <span class="v">minho2026!</span>
+                </div>
+                <div class="field">
+                  <span class="k">Front gate code</span>
+                  <span class="v">8 — 1 — 9 — 0 — #</span>
+                </div>
+                <div class="field">
+                  <span class="k">Key safe</span>
+                  <span class="v">left of door · 4 — 7 — 2 — 1</span>
+                </div>
+              </div>
+              <div class="qr"><div class="pattern"></div></div>
+            </div>
+            <p class="muted" style="margin-top:18px; font-size: 15px;">There is one mesh network across the entire estate, including gardens and pool. The guest network <span style="font-family:'JetBrains Mono',monospace">Ehrlich-Essence-Guest</span> (same password) is rate-limited and isolated, if you'd prefer.</p>
+          </div>
+
+          <!-- POOL -->
+          <div class="guide-section" id="pool">
+            <h2><span class="num">§ 02</span>The pool, steam room &amp; spa</h2>
+            <div class="appliances">
+              <div class="app-card">
+                <div class="top"><span class="lbl">Indoor · 12 m</span><span class="lbl accent">Heated · 28 °C</span></div>
+                <h3>The pool</h3>
+                <ol>
+                  <li>The pool is open all hours; lighting is on a sensor and dims after midnight.</li>
+                  <li>Climate panel by the door: keep humidity below 65% — the dehumidifier is automatic.</li>
+                  <li>The robot runs at dawn — it is friendly; please don't try to swim with it.</li>
+                  <li>Towels are in the cedar chest by the entry. Use one per swim.</li>
+                  <li>Please shower before entering the pool — the rain head is set into the wall opposite the steam room.</li>
+                </ol>
+                <div class="tip">If you would like the pool warmer or cooler, ask Inês — she can adjust between 26 °C and 30 °C.</div>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">Wellness wing · Eucalyptus</span><span class="lbl accent">~45 °C</span></div>
+                <h3>The steam room</h3>
+                <ol>
+                  <li>Press <span style="font-family:'JetBrains Mono',monospace">ON</span> on the panel by the door — it takes 12 minutes to reach temperature.</li>
+                  <li>Add a capful of eucalyptus oil to the reservoir below the bench.</li>
+                  <li>Maximum 25 minutes per session — drink water first.</li>
+                  <li>Auto-off after 60 minutes regardless.</li>
+                </ol>
+                <div class="tip">A rain shower is set into the stone wall opposite — ideal between sessions.</div>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">Garden floor</span><span class="lbl accent">Open all hours</span></div>
+                <h3>The private gym</h3>
+                <ol>
+                  <li>Treadmill, Peloton, free weights to 30 kg.</li>
+                  <li>The Peloton tablet signs in to your account — sign out before you leave.</li>
+                  <li>Music: pull the Sonos zone <span style="font-family:'JetBrains Mono',monospace">GYM</span> from the kitchen tablet or any phone on the network.</li>
+                </ol>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">Daily, dawn</span><span class="lbl">Cleaning robot</span></div>
+                <h3>The pool robot</h3>
+                <ol>
+                  <li>Runs automatically at 6:30 am.</li>
+                  <li>If it has stopped, lift it out by the handle and place on the deck — Inês will reset it.</li>
+                  <li>Please do not redirect its programme; it has a complicated relationship with the steps.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- KITCHEN -->
+          <div class="guide-section" id="kitchen">
+            <h2><span class="num">§ 03</span>The kitchen</h2>
+            <div class="appliances">
+              <div class="app-card">
+                <div class="top"><span class="lbl">La Cornue · Range</span><span class="lbl">Gas · 6 burners</span></div>
+                <h3>The range</h3>
+                <ol>
+                  <li>Turn the dial inward and depress for 3 seconds to ignite.</li>
+                  <li>The left oven is gas (faster), the right oven is electric (more even).</li>
+                  <li>Always turn off the gas valve at the wall when the kitchen is unattended overnight.</li>
+                </ol>
+                <div class="tip">A wood-fired oven is set into the outdoor loggia — Inês can light it on request, an hour ahead.</div>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">Sub-Zero</span><span class="lbl">Two columns</span></div>
+                <h3>Fridge, freezer &amp; wine</h3>
+                <ol>
+                  <li>Left column: refrigerator. Right column: freezer.</li>
+                  <li>The wine cabinet under the island holds 28 bottles; the bottom shelf is reserved for the house's own.</li>
+                  <li>Ice maker is in the freezer door.</li>
+                </ol>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">La Marzocco · Linea Mini</span><span class="lbl">Espresso</span></div>
+                <h3>Coffee</h3>
+                <ol>
+                  <li>Turn on at the back (red switch). It is ready in 15 minutes.</li>
+                  <li>Beans are in the smoked-glass jar; a grinder lives beside it (setting 14 for espresso).</li>
+                  <li>A Moccamaster batch brewer is in the pantry, for the morning carafe.</li>
+                </ol>
+              </div>
+
+              <div class="app-card">
+                <div class="top"><span class="lbl">Dishwasher · Miele</span><span class="lbl">Two drawers</span></div>
+                <h3>Dishwasher</h3>
+                <ol>
+                  <li>Pods are under the sink — one per drawer.</li>
+                  <li>The <span style="font-family:'JetBrains Mono',monospace">QUICK 40 °C</span> programme is plenty for a lunch.</li>
+                  <li>Glassware: top drawer, <span style="font-family:'JetBrains Mono',monospace">GLASS</span> cycle, please.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- TVs -->
+          <div class="guide-section" id="tv">
+            <h2><span class="num">§ 04</span>Televisions &amp; sound</h2>
+            <div class="card paperlike">
+              <div class="card-head">
+                <div>
+                  <span class="meta">Samsung · Apple TV · Sonos</span>
+                  <h3 style="font-size: 30px; margin-top: 6px;">Every room has it. Every room hides it.</h3>
+                </div>
+              </div>
+              <ol class="numbered" style="margin-top: 12px;">
+                <li>
+                  <div>
+                    <h4>One remote per room</h4>
+                    <p>The Apple TV remote controls everything — TV power, volume, source. The Samsung remote is in the drawer, for the rare occasion it isn't enough.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Sign in, sign out</h4>
+                    <p>Each Apple TV is signed out between stays. Sign in with your own Apple ID, Netflix, Disney+, Prime. We do not see your credentials.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Sonos — house-wide</h4>
+                    <p>Twelve zones. Pull the <span style="font-family:'JetBrains Mono',monospace">Sonos</span> app on any phone; the network appears as <span style="font-family:'JetBrains Mono',monospace">Ehrlich-Essence</span>. The pool, terrace, and steam room have their own zones.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Cinema mode in the library</h4>
+                    <p>The library houses a 75″ panel and a soundbar; hold <span style="font-family:'JetBrains Mono',monospace">Menu</span> on the Apple TV remote for 2 s for cinema audio.</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- XBOX -->
+          <div class="guide-section" id="games">
+            <h2><span class="num">§ 05</span>Xbox &amp; play</h2>
+            <p class="lede">The playroom is for whoever lays claim to it first — by age or by guile.</p>
+            <ol class="numbered">
+              <li>
+                <div>
+                  <h4>Powering on</h4>
+                  <p>Press the Xbox button on the controller. The TV will switch to the right source automatically. A second controller is in the cabinet drawer.</p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h4>Your account</h4>
+                  <p>Sign in to your own Xbox account if you want your games library. Otherwise, the house library contains FIFA, Forza, Minecraft, and a handful of family co-ops.</p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h4>Board games &amp; books</h4>
+                  <p>Below the TV, a small library of board games and children's books. We replenish quietly; please feel free.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <!-- iROBOTS -->
+          <div class="guide-section" id="robots">
+            <h2><span class="num">§ 06</span>The iRobots</h2>
+            <p class="lede">Two robotic vacuums — Pedro and Inês — run nightly while you sleep.</p>
+            <ol class="numbered">
+              <li><div><h4>They live by the laundry</h4><p>Each on its dock. Please do not move the docks; they navigate by them.</p></div></li>
+              <li><div><h4>To pause them</h4><p>Press the round button on the top. They will rest until pressed again.</p></div></li>
+              <li><div><h4>If one is lost</h4><p>Look behind couches and under low tables. Please return it to its dock — it will recover within an hour.</p></div></li>
+            </ol>
+          </div>
+
+          <!-- CLIMATE -->
+          <div class="guide-section" id="climate">
+            <h2><span class="num">§ 07</span>Climate &amp; comfort</h2>
+            <div class="appliances">
+              <div class="app-card">
+                <div class="top"><span class="lbl">Per room</span><span class="lbl">Daikin</span></div>
+                <h3>Air conditioning</h3>
+                <ol>
+                  <li>Each room has its own panel — set the temperature directly.</li>
+                  <li>House-wide schedule is set to 22 °C, 9 pm–7 am, May to September.</li>
+                  <li>Please close windows when running A/C.</li>
+                </ol>
+              </div>
+              <div class="app-card">
+                <div class="top"><span class="lbl">Underfloor</span><span class="lbl">Hydronic</span></div>
+                <h3>Heating</h3>
+                <ol>
+                  <li>Underfloor heating on the ground floor, radiators upstairs.</li>
+                  <li>Default schedule is 21 °C, October to April.</li>
+                  <li>The living-room stove is wood-burning — kindling and dry oak are in the store by the gym corridor.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHECKOUT -->
+          <div class="guide-section" id="checkout">
+            <h2><span class="num">§ 08</span>Departure</h2>
+            <p class="lede">Check-out is 11:00. We keep it light — Inês takes care of the rest.</p>
+            <ol class="checkout">
+              <li><span class="time">10:30</span><span class="what">Sign out of all televisions and the Peloton (Apple ID, Netflix, Xbox).</span></li>
+              <li><span class="time">10:40</span><span class="what">Return all keys to the bowl on the entry console; close pool gates.</span></li>
+              <li><span class="time">10:45</span><span class="what">Turn off La Marzocco at the back; close the wall gas valve.</span></li>
+              <li><span class="time">10:50</span><span class="what">Used towels in the bath; bedding may be left as it is.</span></li>
+              <li><span class="time">11:00</span><span class="what">Front door is auto-locking; the gate closes behind you.</span></li>
+            </ol>
+            <p style="margin-top: 24px;" class="muted">Late check-out is often possible — please ask Inês the morning before.</p>
+          </div>
+
+          <!-- HELP -->
+          <div class="guide-section" id="help">
+            <h2><span class="num">§ 09</span>If something is amiss</h2>
+            <div class="ec-strip">
+              <div class="wrap">
+                <div class="grid">
+                  <div>
+                    <h5>House manager</h5>
+                    <div class="name">Inês Reis</div>
+                    <span class="ph">+351 — 912 — 045 — 118</span>
+                  </div>
+                  <div>
+                    <h5>Estate owner</h5>
+                    <div class="name">D. Ehrlich</div>
+                    <span class="ph">+351 — 933 — 700 — 412</span>
+                  </div>
+                  <div>
+                    <h5>Emergency (PT)</h5>
+                    <div class="name">112</div>
+                    <span class="ph">police · fire · medical</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p>For anything mechanical — a flicker, a leak, a remote that won't — Inês is on call between 8 am and 10 pm. For anything beyond that, leave a message and we will follow up by morning. The house is well-loved and well-maintained; it occasionally has its own opinions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>

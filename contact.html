@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reserve — Matos Essence Villa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/site.js"></script>
+  <style>
+    .reserve-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px;
+      align-items: start;
+    }
+    .reserve-form { background: var(--paper); border: 1px solid var(--rule); padding: 48px; }
+    .reserve-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+    .reserve-form label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+    .reserve-form input, .reserve-form textarea, .reserve-form select {
+      width: 100%; padding: 14px 0;
+      border: none; border-bottom: 1px solid var(--rule);
+      background: transparent; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--ink);
+    }
+    .reserve-form input:focus, .reserve-form textarea:focus, .reserve-form select:focus { outline: none; border-bottom-color: var(--accent); }
+    .reserve-form textarea { min-height: 100px; resize: vertical; }
+    .reserve-form .full { grid-column: span 2; }
+    .reserve-form .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+    .reserve-form .head h2 { font-size: 44px; }
+    .reserve-form .head .num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
+
+    .side .meta-line { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .side h3 { font-size: 36px; margin: 24px 0 16px; }
+    .side p { color: var(--ink-soft); }
+    .side .channel {
+      display: grid; grid-template-columns: 32px 1fr auto; gap: 16px;
+      padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: center;
+    }
+    .side .channel .ico { font-family: 'Italiana', serif; font-size: 24px; color: var(--accent); }
+    .side .channel .name { font-family: 'Italiana', serif; font-size: 24px; }
+    .side .channel .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 15px; display: block; margin-top: 2px; }
+    .side .channel a { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+
+    .rates {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 36px;
+    }
+    .rates .rate { padding: 28px 22px; border-right: 1px solid var(--rule); }
+    .rates .rate:last-child { border-right: none; }
+    .rates .rate .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--muted); }
+    .rates .rate .v { font-family: 'Italiana', serif; font-size: 40px; line-height: 1; margin-top: 10px; display:block; }
+    .rates .rate .per { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 15px; display: block; margin-top: 4px; }
+
+    .policies {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 56px;
+    }
+    .policies .pol {
+      padding: 28px 22px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    }
+    .policies .pol:nth-child(3n) { border-right: none; }
+    .policies .pol .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--muted); }
+    .policies .pol h4 { font-size: 22px; margin: 10px 0 8px; }
+    .policies .pol p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+
+    .arrival { padding: 96px 0; }
+    .arrival-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
+    .arrival .ph { aspect-ratio: 4/5; }
+    .arrival ol { list-style: none; padding: 0; margin: 0; counter-reset: a; }
+    .arrival ol li { display: grid; grid-template-columns: 40px 80px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--rule); align-items: baseline; }
+    .arrival ol li:last-child { border-bottom: 1px solid var(--rule); }
+    .arrival ol li::before { counter-increment: a; content: counter(a, decimal-leading-zero); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; }
+    .arrival ol li .when { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .arrival ol li .what strong { font-family: 'Italiana', serif; font-weight: 400; font-size: 22px; display: block; margin-bottom: 4px; }
+
+    @media (max-width: 900px) {
+      .reserve-layout { grid-template-columns: 1fr; gap: 32px; }
+      .reserve-form .row { grid-template-columns: 1fr; }
+      .reserve-form .full { grid-column: span 1; }
+      .rates { grid-template-columns: 1fr; }
+      .rates .rate { border-right: none; border-bottom: 1px solid var(--rule); }
+      .policies { grid-template-columns: 1fr; }
+      .arrival-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Folio VI · Reserve the Villa</span>
+      <h1 class="title display">Come and stay,<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">at our table.</em></h1>
+      <p class="sub">Direct inquiry receives the best nightly rate, our full concierge, and the chef's menu on arrival. We will reply, in person, within the day.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="reserve-layout">
+        <!-- FORM -->
+        <form class="reserve-form" onsubmit="event.preventDefault(); this.querySelector('button.btn').innerHTML='Sent — we&rsquo;ll reply within the day ✓';">
+          <div class="head">
+            <h2>Direct inquiry</h2>
+            <span class="num">§ 01 · Form</span>
+          </div>
+          <div class="row">
+            <div><label>First name</label><input type="text" placeholder="—" /></div>
+            <div><label>Last name</label><input type="text" placeholder="—" /></div>
+          </div>
+          <div class="row">
+            <div><label>Email</label><input type="email" placeholder="—" /></div>
+            <div><label>Telephone</label><input type="tel" placeholder="+ ..." /></div>
+          </div>
+          <div class="row">
+            <div><label>Check-in</label><input type="date" /></div>
+            <div><label>Check-out</label><input type="date" /></div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Number of guests</label>
+              <select>
+                <option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 guests</option><option>8 guests</option><option>9 guests</option><option>10 guests</option><option>11 guests</option><option>12 guests</option>
+              </select>
+            </div>
+            <div>
+              <label>Reason for the stay</label>
+              <select>
+                <option>Family holiday</option>
+                <option>Friends &amp; long weekend</option>
+                <option>Wedding / celebration</option>
+                <option>Workation / retreat</option>
+                <option>Honeymoon</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="full">
+              <label>A note, if you'd like</label>
+              <textarea placeholder="What you're hoping for from the stay. Any services we should plan around (chef, driver, EV, events). Dietary needs."></textarea>
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+            <button class="btn primary" type="submit">Send inquiry <span class="arrow">→</span></button>
+            <span class="muted" style="font-family:'Cormorant Garamond',serif; font-style: italic; font-size: 16px;">We reply within the day, in person.</span>
+          </div>
+        </form>
+
+        <!-- SIDE -->
+        <aside class="side">
+          <div class="meta-line">§ 02 — Other ways to reach us</div>
+
+          <h3>Or, more directly.</h3>
+          <p>Whatever's easiest. We use the same hands for every channel.</p>
+
+          <div style="margin-top: 28px;">
+            <div class="channel">
+              <span class="ico">✉</span>
+              <div><span class="name">stay@matos21.pt</span><span class="sub">replies within the day</span></div>
+              <a href="mailto:stay@matos21.pt">Email →</a>
+            </div>
+            <div class="channel">
+              <span class="ico">☏</span>
+              <div><span class="name">+351 — 933 — 700 — 412</span><span class="sub">Mon–Sat · 9–19, Western European time</span></div>
+              <a href="tel:+351933700412">Call →</a>
+            </div>
+            <div class="channel">
+              <span class="ico">◯</span>
+              <div><span class="name">WhatsApp</span><span class="sub">+351 933 700 412</span></div>
+              <a href="https://wa.me/351933700412">Open →</a>
+            </div>
+            <div class="channel">
+              <span class="ico">✦</span>
+              <div><span class="name">Airbnb listing</span><span class="sub">read reviews, instant book</span></div>
+              <a href="#">View →</a>
+            </div>
+          </div>
+
+          <!-- rates -->
+          <div style="margin-top: 36px;">
+            <div class="meta-line">§ 03 — Indicative rates</div>
+            <div class="rates">
+              <div class="rate"><span class="lbl">Low — Nov–Mar</span><span class="v">€780</span><span class="per">per night</span></div>
+              <div class="rate"><span class="lbl">Shoulder</span><span class="v">€1,180</span><span class="per">per night</span></div>
+              <div class="rate"><span class="lbl">High — Jun–Sep</span><span class="v">€1,640</span><span class="per">per night</span></div>
+            </div>
+            <p class="muted" style="font-size: 14px; margin-top: 10px;">5-night minimum in high season; 3-night minimum elsewhere. Cleaning &amp; tourism tax included.</p>
+          </div>
+        </aside>
+      </div>
+
+      <!-- POLICIES -->
+      <div style="margin-top: 96px;">
+        <div class="kicker">
+          <span class="num">§ 04</span>
+          <span class="eyebrow">House policies</span>
+        </div>
+        <div class="policies">
+          <div class="pol"><span class="lbl">Check-in</span><h4>From 16:00</h4><p>Early arrivals welcome to wait by the pool; rooms not always ready before four.</p></div>
+          <div class="pol"><span class="lbl">Check-out</span><h4>By 11:00</h4><p>Late check-out sometimes possible; ask the morning before.</p></div>
+          <div class="pol"><span class="lbl">Deposit</span><h4>30% to confirm</h4><p>Balance due 30 days before arrival; we accept SEPA &amp; card.</p></div>
+          <div class="pol"><span class="lbl">Cancellation</span><h4>Free, to 30 days</h4><p>Within 30 days, 50% refundable; within 7 days, non-refundable.</p></div>
+          <div class="pol"><span class="lbl">Children</span><h4>Warmly welcome</h4><p>Cribs and highchairs available, no charge. Pool unfenced — we advise supervision.</p></div>
+          <div class="pol"><span class="lbl">Pets</span><h4>On request</h4><p>One well-mannered dog per stay, on the ground floor.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARRIVAL DAY -->
+  <section class="arrival" style="background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 05</span>
+        <span class="eyebrow">A note on arrival</span>
+      </div>
+      <div class="arrival-grid">
+        <div>
+          <h2 style="max-width: 16ch; margin-bottom: 28px;">The first afternoon, as we do it.</h2>
+          <ol>
+            <li><span class="when">15:30</span><span class="what"><strong>Driver waits</strong>at Porto Airport arrivals, sign with your name</span></li>
+            <li><span class="when">16:30</span><span class="what"><strong>Welcome at the gate</strong>Inês greets you with a cold glass and the keys</span></li>
+            <li><span class="when">16:45</span><span class="what"><strong>House tour, ~20 min</strong>the indoor pool, the steam room, the gate codes, the Wi-Fi</span></li>
+            <li><span class="when">17:30</span><span class="what"><strong>Settle in</strong>swim, nap, walk the grounds — your time, undisturbed</span></li>
+            <li><span class="when">19:30</span><span class="what"><strong>Aperitivo on the lawn</strong>vinho verde, olives, the long view</span></li>
+            <li><span class="when">20:30</span><span class="what"><strong>Dinner, if you've asked</strong>chef arrives quietly; dinner served when you wish</span></li>
+          </ol>
+          <p class="muted" style="margin-top: 24px;">Everything above is optional and adjustable. Tell us how you'd like to arrive, and we'll write to the shape of it.</p>
+        </div>
+        <div class="photo" style="aspect-ratio: 4/5; border:1px solid var(--rule);"><img src="images/p55.jpg" alt="The driveway and garden at Matos Essence Villa in late sun." /><span class="ph-label">Plate · the gate at five</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section center">
+    <div class="wrap">
+      <h2 style="max-width: 16ch; margin: 0 auto 28px;">We hope to see you in the Minho.</h2>
+      <p class="lede" style="margin: 0 auto 36px; text-align:center;">— from the house, with thanks.</p>
+      <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <a href="index.html" class="btn">Back to overview</a>
+        <a href="mailto:stay@matos21.pt" class="btn primary">Send us a note <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>

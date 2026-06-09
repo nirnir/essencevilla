@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Things to Do — Matos Essence Villa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/site.js"></script>
+  <style>
+    /* Region pills */
+    .regions {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .regions a {
+      padding: 28px 22px;
+      border-right: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-soft);
+      border-bottom: none;
+      transition: background .15s;
+    }
+    .regions a:last-child { border-right: none; }
+    .regions a:hover { background: var(--paper); color: var(--accent); }
+    .regions a .name { font-family: 'Italiana', serif; font-size: 24px; letter-spacing: 0; text-transform: none; display: block; margin-top: 8px; color: var(--ink); }
+    .regions a .dist { display: block; margin-top: 4px; }
+
+    /* Region block */
+    .region-block { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+    .region-head {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end;
+      margin-bottom: 48px;
+    }
+    .region-head h2 { font-size: clamp(48px, 6vw, 100px); line-height: 0.92; }
+    .region-head .lede { font-style: italic; color: var(--ink-soft); max-width: 50ch; }
+    .region-head .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--accent); display: block; margin-bottom: 14px; }
+
+    /* recommendation cards */
+    .recs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .rec {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .rec .ph { aspect-ratio: 4/5; }
+    .rec .top { display:flex; justify-content: space-between; align-items: baseline; }
+    .rec .top .cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
+    .rec .top .dist { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); }
+    .rec h3 { font-size: 28px; line-height: 1; }
+    .rec p { color: var(--ink-soft); font-size: 16px; margin-bottom: 4px; }
+    .rec .meta-row { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 15px; }
+
+    .map-strip {
+      display: flex; gap: 24px; align-items: stretch;
+      padding: 24px 0;
+    }
+    .map-strip .ph { aspect-ratio: 21/9; flex: 1; }
+    .map-strip .notes { width: 320px; }
+    .map-strip .notes h4 { font-size: 26px; margin-bottom: 12px; }
+    .map-strip .notes p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+
+    .day-plans {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 32px;
+    }
+    .plan {
+      background: var(--paper); border: 1px solid var(--rule); padding: 28px;
+    }
+    .plan .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
+    .plan h4 { font-size: 28px; margin: 10px 0 16px; }
+    .plan ol { padding: 0; margin: 0; list-style: none; counter-reset: p; }
+    .plan ol li { padding: 10px 0; border-top: 1px dashed var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 14px; align-items: baseline; }
+    .plan ol li:first-child { border-top: none; }
+    .plan ol li .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--muted); }
+    .plan ol li .a { color: var(--ink-soft); font-size: 16px; }
+    .plan ol li .a strong { color: var(--ink); font-family: 'Italiana', serif; font-weight: 400; font-size: 19px; display: block; margin-bottom: 2px; }
+
+    @media (max-width: 900px) {
+      .regions { grid-template-columns: 1fr 1fr; }
+      .regions a:nth-child(2n) { border-right: none; }
+      .region-head { grid-template-columns: 1fr; }
+      .recs { grid-template-columns: 1fr; }
+      .map-strip { flex-direction: column; }
+      .map-strip .notes { width: 100%; }
+      .day-plans { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Folio IV · The Country Around</span>
+      <h1 class="title display">Five regions,<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">all within reach.</em></h1>
+      <p class="sub">A handful of places we keep returning to — restaurants, walks, churches, vineyards, beaches. Personal, opinionated, and unfinished. From the gate at Rua dos Matos, the cathedral is ten minutes, Bom Jesus is five, the Douro is an hour and a half.</p>
+    </div>
+  </section>
+
+  <!-- REGION INDEX -->
+  <nav class="regions">
+    <a href="#braga"><span>i.</span><span class="name">Braga</span><span class="dist">10 min · cathedral &amp; old town</span></a>
+    <a href="#geres"><span>ii.</span><span class="name">Gerês</span><span class="dist">40 min · mountains &amp; cascades</span></a>
+    <a href="#porto"><span>iii.</span><span class="name">Porto</span><span class="dist">50 min · river &amp; port houses</span></a>
+    <a href="#vigo"><span>iv.</span><span class="name">Vigo</span><span class="dist">1 h 20 · Galician coast</span></a>
+    <a href="#douro"><span>v.</span><span class="name">Douro</span><span class="dist">1 h 30 · vineyards &amp; valley</span></a>
+  </nav>
+
+  <!-- BRAGA -->
+  <section class="region-block" id="braga">
+    <div class="wrap">
+      <div class="region-head">
+        <div>
+          <span class="num">§ 01 — ten minutes downhill</span>
+          <h2>Braga.</h2>
+        </div>
+        <p class="lede">Older than Portugal itself, and proud of it. The cathedral, the granite, the espresso in tiled cafés. A morning is enough; an evening is better.</p>
+      </div>
+
+      <div class="recs">
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Bom Jesus do Monte</span></div>
+          <div class="top"><span class="cat">Pilgrimage · landmark</span><span class="dist">5 min</span></div>
+          <h3>Bom Jesus do Monte</h3>
+          <p>Five minutes uphill from the villa. Climb the baroque stair on foot for the full effect; the funicular for the way down. Best at golden hour, when the whole valley turns to honey.</p>
+          <span class="meta-row">— open daily, gardens free</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Sé de Braga</span></div>
+          <div class="top"><span class="cat">Cathedral · history</span><span class="dist">10 min</span></div>
+          <h3>The Old Cathedral</h3>
+          <p>Portugal's oldest, in continual service since the 11th century. The treasury is small but worth the four euros; the silence in the cloister, free.</p>
+          <span class="meta-row">— treasury closes at 5:30 pm</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Frigideiras do Cantinho</span></div>
+          <div class="top"><span class="cat">Eat · pastry</span><span class="dist">10 min</span></div>
+          <h3>Frigideiras do Cantinho</h3>
+          <p>Beef-and-puff-pastry frigideiras, sold here since 1796. Order two and a galão; sit at the marble counter. The waiter has heard your joke.</p>
+          <span class="meta-row">— closed Mondays</span>
+        </div>
+      </div>
+
+      <div class="map-strip">
+        <div class="ph"><span class="ph-label">Map · Braga &amp; the surrounding parishes</span></div>
+        <div class="notes">
+          <h4>The walking circuit</h4>
+          <p>Park at Avenida da Liberdade. From there, on foot: Arco da Porta Nova → Sé → Largo do Paço → Praça da República → Avenida Central → coffee. About 90 minutes, easily two hours if you stop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GERES -->
+  <section class="region-block" id="geres" style="background: var(--paper);">
+    <div class="wrap">
+      <div class="region-head">
+        <div>
+          <span class="num">§ 02 — forty minutes east</span>
+          <h2><em style="font-family:'Cormorant Garamond';color:var(--accent);">Peneda‑</em>Gerês.</h2>
+        </div>
+        <p class="lede">Portugal's only national park. Granite shoulders, oak woods, wild horses, and a small archive of waterfalls. Bring proper shoes; the cascades are not for sandals.</p>
+      </div>
+
+      <div class="recs">
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Cascata do Arado</span></div>
+          <div class="top"><span class="cat">Hike · waterfall</span><span class="dist">50 min</span></div>
+          <h3>Cascata do Arado</h3>
+          <p>A 20-minute walk down a marked trail. Swimming pool below; the water is cold enough to be improving. Pack a towel.</p>
+          <span class="meta-row">— easy / moderate, 1.2 km loop</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Pedra Bela viewpoint</span></div>
+          <div class="top"><span class="cat">View · short walk</span><span class="dist">45 min</span></div>
+          <h3>Pedra Bela</h3>
+          <p>A ten-minute walk to the most photographed lookout in the park. Bring a thermos for sunrise; bring patience for sunset coaches.</p>
+          <span class="meta-row">— best at dawn</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Vilarinho das Furnas</span></div>
+          <div class="top"><span class="cat">History · reservoir</span><span class="dist">55 min</span></div>
+          <h3>The drowned village</h3>
+          <p>In dry summers, the stone walls of Vilarinho rise from the reservoir. A small museum tells the story; the swim, when allowed, is unforgettable.</p>
+          <span class="meta-row">— check water levels before going</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTO -->
+  <section class="region-block" id="porto">
+    <div class="wrap">
+      <div class="region-head">
+        <div>
+          <span class="num">§ 03 — fifty minutes south</span>
+          <h2>Porto.</h2>
+        </div>
+        <p class="lede">A working river city in a perfect state of disrepair. Tiled façades, ironwork bridges, and port houses on the south bank that pour with quiet ceremony.</p>
+      </div>
+
+      <div class="recs">
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Livraria Lello</span></div>
+          <div class="top"><span class="cat">Books · landmark</span><span class="dist">55 min</span></div>
+          <h3>Livraria Lello</h3>
+          <p>Book a timed ticket online before you go. Arrive at the door 10 minutes early; spend an hour, no more. The voucher applies to a purchase.</p>
+          <span class="meta-row">— closed Sundays</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Cantina 32</span></div>
+          <div class="top"><span class="cat">Eat · modern Portuguese</span><span class="dist">55 min</span></div>
+          <h3>Cantina 32</h3>
+          <p>A modern take, near the Stock Exchange Palace. The "cheesecake in a flowerpot" is silly and excellent. Reserve.</p>
+          <span class="meta-row">— dinner only; bookings advised</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Graham's port house</span></div>
+          <div class="top"><span class="cat">Drink · port</span><span class="dist">1 hr</span></div>
+          <h3>Graham's Lodge</h3>
+          <p>Across the Dom Luís bridge. The full vintage tasting includes a 30-year Tawny that does not photograph well. Take the cable car back, if the queue is short.</p>
+          <span class="meta-row">— tours on the hour</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIGO -->
+  <section class="region-block" id="vigo" style="background: var(--paper);">
+    <div class="wrap">
+      <div class="region-head">
+        <div>
+          <span class="num">§ 04 — an hour twenty, across the border</span>
+          <h2><em style="font-family:'Cormorant Garamond';color:var(--accent);">Vigo &amp; </em>the Rías Baixas.</h2>
+        </div>
+        <p class="lede">Galicia speaks a different Portuguese, eats more shellfish, and looks at the Atlantic head-on. A long day, well spent.</p>
+      </div>
+
+      <div class="recs">
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Cíes islands ferry</span></div>
+          <div class="top"><span class="cat">Boat · beach</span><span class="dist">1 hr 30</span></div>
+          <h3>The Cíes Islands</h3>
+          <p>A 40-minute ferry from Vigo's quay. Permit required in summer (we'll arrange). White-sand beaches, one café, no cars. Last boat back at 7 pm.</p>
+          <span class="meta-row">— book at least a week ahead, Jun–Sep</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">A Centoleira</span></div>
+          <div class="top"><span class="cat">Eat · seafood</span><span class="dist">1 hr 20</span></div>
+          <h3>A Centoleira, Bouzas</h3>
+          <p>The percebes (gooseneck barnacles), the pulpo, the white Albariño. Order what the table next to you ordered; they live here.</p>
+          <span class="meta-row">— closed Sundays evening</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Cambados &amp; the vineyards</span></div>
+          <div class="top"><span class="cat">Drink · vineyards</span><span class="dist">1 hr 45</span></div>
+          <h3>Cambados</h3>
+          <p>The unofficial capital of Albariño. Three or four small bodegas open by appointment. The Pazo de Fefiñáns, in the square, is a perfect place to start.</p>
+          <span class="meta-row">— concierge can arrange visits</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOURO -->
+  <section class="region-block" id="douro">
+    <div class="wrap">
+      <div class="region-head">
+        <div>
+          <span class="num">§ 05 — an hour thirty east-south-east</span>
+          <h2>The Douro.</h2>
+        </div>
+        <p class="lede">A river valley sculpted, terrace by terrace, into the most beautiful wine country on earth. Best in October at harvest; lovely the rest of the year.</p>
+      </div>
+
+      <div class="recs">
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Quinta do Crasto</span></div>
+          <div class="top"><span class="cat">Vineyard · tour</span><span class="dist">1 hr 50</span></div>
+          <h3>Quinta do Crasto</h3>
+          <p>The infinity pool that flies over the river. Tour, tasting, lunch on the terrace — half a day, easily. We will book.</p>
+          <span class="meta-row">— visits by appointment only</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Pinhão station tiles</span></div>
+          <div class="top"><span class="cat">Walk · azulejos</span><span class="dist">2 hr</span></div>
+          <h3>Pinhão Station</h3>
+          <p>The most beautiful train station in Portugal — twenty-four azulejo panels of the wine year. A free, fifteen-minute visit; an excellent prelude to lunch.</p>
+          <span class="meta-row">— always open</span>
+        </div>
+        <div class="rec">
+          <div class="ph"><span class="ph-label">Rabelo river boat</span></div>
+          <div class="top"><span class="cat">Boat · slow afternoon</span><span class="dist">2 hr</span></div>
+          <h3>Rabelo from Pinhão</h3>
+          <p>A traditional flat-bottomed wine boat. An hour up the river, an hour back, in absolute silence except for the engine. Best at five.</p>
+          <span class="meta-row">— last departure 6 pm summer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY PLANS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 06</span>
+        <span class="eyebrow">Three sample days</span>
+      </div>
+      <h2 style="max-width: 18ch; margin-bottom: 24px;">If you only have one day, here is what we would do.</h2>
+
+      <div class="day-plans">
+        <div class="plan">
+          <span class="label">Day Plan A — the city day</span>
+          <h4>Braga, on foot.</h4>
+          <ol>
+            <li><span class="t">09:00</span><span class="a"><strong>Coffee, Café A Brasileira</strong>marble counter, galão, a pastel</span></li>
+            <li><span class="t">10:00</span><span class="a"><strong>Sé Catedral</strong>treasury, cloister, silence</span></li>
+            <li><span class="t">12:30</span><span class="a"><strong>Lunch at Inato</strong>tasting menu, near the cathedral</span></li>
+            <li><span class="t">15:00</span><span class="a"><strong>Bom Jesus do Monte</strong>climb the stair</span></li>
+            <li><span class="t">19:00</span><span class="a"><strong>Aperitivo at the villa</strong>terrace, vinho verde</span></li>
+          </ol>
+        </div>
+        <div class="plan">
+          <span class="label">Day Plan B — the wild day</span>
+          <h4>Gerês &amp; the cascades.</h4>
+          <ol>
+            <li><span class="t">08:30</span><span class="a"><strong>Chef's picnic basket</strong>collected at the gate</span></li>
+            <li><span class="t">10:00</span><span class="a"><strong>Mata da Albergaria</strong>oak woods, slow walk</span></li>
+            <li><span class="t">12:30</span><span class="a"><strong>Cascata do Arado</strong>swim, picnic</span></li>
+            <li><span class="t">16:00</span><span class="a"><strong>Pedra Bela</strong>views, deep breath</span></li>
+            <li><span class="t">20:00</span><span class="a"><strong>Dinner at home</strong>chef-prepared, BBQ</span></li>
+          </ol>
+        </div>
+        <div class="plan">
+          <span class="label">Day Plan C — the river day</span>
+          <h4>Porto &amp; the south bank.</h4>
+          <ol>
+            <li><span class="t">10:00</span><span class="a"><strong>Driver to Porto</strong>arrive Ribeira, walk</span></li>
+            <li><span class="t">11:00</span><span class="a"><strong>Livraria Lello</strong>booked ticket</span></li>
+            <li><span class="t">13:00</span><span class="a"><strong>Lunch at Cantina 32</strong>modern Portuguese</span></li>
+            <li><span class="t">15:30</span><span class="a"><strong>Graham's port lodge</strong>vintage tasting</span></li>
+            <li><span class="t">18:30</span><span class="a"><strong>Cable car &amp; home</strong>back by 8</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section center" style="border-top: 1px solid var(--rule);">
+    <div class="wrap">
+      <span class="eyebrow">Concierge</span>
+      <h2 style="max-width: 20ch; margin: 18px auto 28px;">Let us arrange the day for you.</h2>
+      <p class="lede" style="margin: 0 auto 28px; text-align:center;">Tickets, tables, drivers, picnics — all bookable through the house.</p>
+      <a href="services.html" class="btn primary">Services &amp; concierge <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matos Essence Villa — A private villa in Braga, Portugal</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="js/site.js"></script>
+  <style>
+    /* ===== Home-only ===== */
+    .hero { padding: 32px 0 0; position: relative; }
+    .hero .meta-line {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 16px; border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap; gap: 8px;
+    }
+    .hero .meta-line .vol,
+    .hero .meta-line .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+
+    .hero-main {
+      display: grid; grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px; padding: 56px 0 32px; align-items: end;
+    }
+    .hero h1 {
+      font-size: clamp(60px, 11vw, 180px);
+      line-height: 0.86; letter-spacing: -0.01em; margin-bottom: 0;
+    }
+    .hero h1 .num {
+      font-family: 'Italiana', serif; color: var(--accent);
+      font-style: normal;
+    }
+    .hero h1 .small {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-weight: 400;
+      font-size: 0.36em; color: var(--ink-soft);
+      letter-spacing: 0.005em; display: block;
+      margin-top: 14px;
+    }
+    .hero .standfirst {
+      font-size: clamp(20px, 1.6vw, 26px);
+      line-height: 1.45; color: var(--ink-soft);
+      max-width: 38ch; font-style: italic;
+    }
+    .hero .standfirst .drop {
+      font-family: 'Italiana', serif;
+      font-size: 1.4em; font-style: normal; color: var(--accent);
+    }
+
+    .hero-photo {
+      position: relative; margin: 24px 0 0;
+      aspect-ratio: 21 / 9; border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .hero-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+    }
+    .hero-photo .overlay {
+      position: absolute; left: 0; bottom: 0;
+      padding: 18px 22px;
+      background: color-mix(in oklab, var(--paper) 92%, transparent);
+      border-top: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+      font-family: 'Italiana', serif;
+      font-size: 22px; color: var(--ink);
+      max-width: 60%;
+      backdrop-filter: blur(6px);
+      z-index: 1;
+    }
+    .hero-photo .overlay .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; font-style: normal; font-weight: 500; }
+    .hero-photo .credit {
+      position: absolute; right: 14px; bottom: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink);
+      background: color-mix(in oklab, var(--paper) 86%, transparent);
+      padding: 6px 10px; border: 1px solid var(--rule);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+    }
+
+    .hero-coords {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0 22px; border-bottom: 1px solid var(--rule);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+      flex-wrap: wrap; gap: 10px 22px;
+    }
+
+    /* dossier strip */
+    .dossier {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .dossier .cell { padding: 32px 24px; border-right: 1px solid var(--rule); }
+    .dossier .cell:last-child { border-right: none; }
+    .dossier .cell .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 14px; }
+    .dossier .cell .val { font-family: 'Italiana', serif; font-size: clamp(32px, 3.4vw, 56px); line-height: 1; }
+    .dossier .cell .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--ink-soft); font-size: 16px; margin-top: 8px; display: block; }
+
+    /* feature triptych */
+    .triptych { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    .feature .photo { aspect-ratio: 4/5; margin-bottom: 18px; }
+    .feature h3 { margin-bottom: 8px; font-size: 32px; }
+    .feature .label { color: var(--accent); margin-bottom: 12px; display: inline-block; }
+    .feature p { color: var(--ink-soft); font-size: 17px; }
+
+    /* big editorial split */
+    .split {
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px;
+      align-items: center;
+    }
+    .split .photo { aspect-ratio: 4/5; }
+    .split .copy h2 { margin-bottom: 28px; }
+    .split .copy .pullquote {
+      font-family: 'Italiana', serif;
+      font-size: clamp(32px, 3vw, 48px);
+      line-height: 1.05; color: var(--ink);
+      margin: 28px 0 28px;
+      border-left: 1px solid var(--accent);
+      padding-left: 28px;
+    }
+    .split .copy .signoff { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); margin-top: 18px; font-size: 16px; }
+
+    /* services teaser */
+    .services-teaser {
+      background: var(--paper);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); border-left: 1px solid var(--rule);
+    }
+    .services-grid .item {
+      border-right: 1px solid var(--rule);
+      padding: 36px 22px; min-height: 220px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .services-grid .item .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--accent); }
+    .services-grid .item h4 { font-family: 'Italiana', serif; font-size: 28px; line-height: 1; }
+    .services-grid .item p { font-size: 15px; color: var(--ink-soft); margin: 0; }
+
+    /* CTA */
+    .cta-band { padding: 120px 0; text-align: center; border-top: 1px solid var(--rule); }
+    .cta-band h2 { font-size: clamp(56px, 8vw, 120px); line-height: 0.92; max-width: 14ch; margin: 0 auto 36px; }
+    .cta-actions { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    @media (max-width: 900px) {
+      .hero-main { grid-template-columns: 1fr; gap: 24px; }
+      .triptych { grid-template-columns: 1fr; }
+      .split { grid-template-columns: 1fr; gap: 32px; }
+      .dossier { grid-template-columns: 1fr 1fr; }
+      .dossier .cell:nth-child(2n) { border-right: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .services-grid .item { border-bottom: 1px solid var(--rule); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="meta-line">
+        <span class="vol">No. I · Estate Folio</span>
+        <span class="date">MMXXVI · Braga, Portugal</span>
+      </div>
+
+      <div class="hero-main">
+        <div>
+          <h1 class="display">
+            Matos Essence<br />Villa
+            <span class="small">a private villa, on the green hill of Braga</span>
+          </h1>
+        </div>
+        <div>
+          <p class="standfirst">
+            <span class="drop">A</span> contemporary house of wood, light and water — between the cathedral spires of Braga, the granite of Sameiro, and the slow bend of the Cávado. A house for long mornings, long tables, and the slow choreography of a Portuguese summer.
+          </p>
+          <div style="display:flex; gap:12px; margin-top: 28px; flex-wrap:wrap;">
+            <a href="contact.html" class="btn primary">Reserve the villa <span class="arrow">→</span></a>
+            <a href="the-house.html" class="btn">Tour the house</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <img src="images/p17.jpg" alt="The living room of Matos Essence Villa — vaulted wood ceiling, light pine floor, garden beyond." />
+        <div class="overlay">
+          <span class="meta">Plate 01 · The Living Room</span>
+          afternoon light, looking south to the garden
+        </div>
+        <span class="credit">[ Matos Essence Villa ]</span>
+      </div>
+
+      <div class="hero-coords">
+        <span>Rua dos Matos 21, Braga</span>
+        <span>São Pedro de Este</span>
+        <span>Six suites · Sleeps twelve</span>
+        <span>Indoor heated pool · Steam · Gym</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOSSIER -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 01</span>
+        <span class="eyebrow">The Dossier</span>
+      </div>
+      <div class="dossier">
+        <div class="cell">
+          <span class="label">Bedrooms</span>
+          <span class="val">06</span>
+          <span class="sub">three king suites, a twin, a queen, a children's room</span>
+        </div>
+        <div class="cell">
+          <span class="label">Bathrooms</span>
+          <span class="val">07</span>
+          <span class="sub">stone, glass and pine, rain showers throughout</span>
+        </div>
+        <div class="cell">
+          <span class="label">Sleeps</span>
+          <span class="val">12</span>
+          <span class="sub">families, friends, or both at once</span>
+        </div>
+        <div class="cell">
+          <span class="label">Wellness</span>
+          <span class="val">∞</span>
+          <span class="sub">heated indoor pool, steam room, private gym</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRIPTYCH -->
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 02</span>
+        <span class="eyebrow">A Sense of the House</span>
+      </div>
+      <div class="triptych">
+        <div class="feature">
+          <div class="photo"><img src="images/p40.jpg" alt="Indoor heated pool with a line-drawing mural and pale wood bench." /><span class="ph-label">Plate 02 · Indoor pool</span></div>
+          <span class="label">The Water</span>
+          <h3>An indoor pool, year-round.</h3>
+          <p>Twelve metres of still, heated water under a soft daylight ceiling. A steam room and rain shower are set into the adjacent wing — for the cool hours, and the warm ones.</p>
+        </div>
+        <div class="feature">
+          <div class="photo"><img src="images/p20.jpg" alt="The kitchen and dining room of Matos Essence Villa — bamboo ceiling, long table, valley views." /><span class="ph-label">Plate 03 · Kitchen &amp; dining</span></div>
+          <span class="label">The Table</span>
+          <h3>A kitchen built for long meals.</h3>
+          <p>Twin ovens, a six-burner range with hood, a Sub-Zero, a marble island. A dining table that seats ten, with a low window onto the valley. The chef arrives with the season's market by ten.</p>
+        </div>
+        <div class="feature">
+          <div class="photo"><img src="images/p19.jpg" alt="Open living room with curved sofa, wood-burning stove and floor-to-ceiling glass to the garden." /><span class="ph-label">Plate 04 · The living room</span></div>
+          <span class="label">The Quiet</span>
+          <h3>Rooms made for the slow afternoon.</h3>
+          <p>A wood-burning stove at the centre, a curved velvet sectional, a Sonos zone in every room. Stay in. The world will wait.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPLIT — LOCATION -->
+  <section class="section" style="background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 03</span>
+        <span class="eyebrow">The Setting</span>
+      </div>
+      <div class="split">
+        <div class="photo"><img src="images/p50.jpg" alt="The villa from across the lawn — orange wood-clad façade, hills of Braga in the distance." /><span class="ph-label">Plate 05 · The lawn, looking back</span></div>
+        <div class="copy">
+          <h2>São Pedro de Este,<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">on the green side of Braga.</em></h2>
+          <p class="dropcap">Rua dos Matos rises on the eastern hillside of Braga, in the small parish of São Pedro de Este — five minutes from the city centre, ten from the baroque stair of Bom Jesus, twenty from the granite outcrops of Sameiro. The Minho rolls north, vineyards to the Atlantic, Gerês climbing east. The villa sits in the middle of it.</p>
+          <div class="pullquote">
+            "Five minutes from the cathedral, an hour from the Douro, a country away from everywhere."
+          </div>
+          <span class="signoff">— from the estate journal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES TEASER -->
+  <section class="services-teaser">
+    <div class="wrap" style="padding-top: 64px; padding-bottom: 0;">
+      <div class="kicker" style="margin-bottom: 32px;">
+        <span class="num">§ 04</span>
+        <span class="eyebrow">Concierge — discreet, on request</span>
+      </div>
+      <h2 style="max-width: 18ch; margin-bottom: 48px;">A house that arranges itself around you.</h2>
+    </div>
+    <div class="services-grid">
+      <div class="item"><span class="num">i.</span><h4>Private Chef</h4><p>Breakfast through dinner. Market-led, Minho-rooted.</p></div>
+      <div class="item"><span class="num">ii.</span><h4>Private Driver</h4><p>Mercedes V-Class for Porto, Douro, the airports.</p></div>
+      <div class="item"><span class="num">iii.</span><h4>Daily Housekeeping</h4><p>Two visits a day, turned-down beds, fresh flowers.</p></div>
+      <div class="item"><span class="num">iv.</span><h4>EV Charging</h4><p>Charger at the gate; Tesla adaptor.</p></div>
+      <div class="item"><span class="num">v.</span><h4>Events</h4><p>Long-table dinners, weddings, small celebrations.</p></div>
+    </div>
+    <div class="wrap" style="padding-top: 32px; padding-bottom: 64px; text-align:right;">
+      <a href="services.html" class="btn">The full concierge <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="wrap">
+      <span class="eyebrow">An invitation</span>
+      <h2 style="margin-top: 18px;"><em style="font-family:'Cormorant Garamond';color:var(--accent);">Come, &amp;</em> stay a while.</h2>
+      <p class="lede" style="margin: 0 auto 36px; text-align:center;">Direct inquiry receives the best rate, our full concierge, and the chef's menu on arrival.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn primary">Direct Inquiry <span class="arrow">→</span></a>
+        <a href="contact.html" class="btn">View on Airbnb</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa · Rua dos Matos 21, Braga</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>

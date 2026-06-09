@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Concierge &amp; Services — Matos Essence Villa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/site.js"></script>
+  <style>
+    .menu-list { border-top: 1px solid var(--rule); }
+    .menu-row {
+      display: grid;
+      grid-template-columns: 80px 1.1fr 1fr auto;
+      gap: 32px;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .menu-row .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--accent); padding-top: 10px; }
+    .menu-row .head h3 { font-size: clamp(32px, 3.4vw, 52px); line-height: 1; margin-bottom: 14px; }
+    .menu-row .head .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 14px; }
+    .menu-row .body p { color: var(--ink-soft); margin-bottom: 14px; max-width: 50ch; }
+    .menu-row .body ul { padding: 0; margin: 0; list-style: none; }
+    .menu-row .body ul li { padding: 4px 0; font-size: 16px; color: var(--ink-soft); }
+    .menu-row .body ul li::before { content: "—"; padding-right: 10px; color: var(--accent); }
+    .menu-row .price { text-align: right; }
+    .menu-row .price .from { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--muted); display: block; }
+    .menu-row .price .amt { font-family: 'Italiana', serif; font-size: clamp(36px, 4vw, 56px); line-height: 1; display: block; margin-top: 6px; }
+    .menu-row .price .per { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); display: block; margin-top: 4px; font-size: 15px; }
+
+    .menus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .menucard {
+      border: 1px solid var(--rule); padding: 28px; background: var(--paper);
+    }
+    .menucard .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
+    .menucard h4 { font-size: 28px; margin: 12px 0 16px; }
+    .menucard .course { padding: 8px 0; border-top: 1px dashed var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 14px; }
+    .menucard .course:first-of-type { border-top: none; }
+    .menucard .course .c { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+    .menucard .course .d { color: var(--ink-soft); font-size: 16px; }
+
+    .driver-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start;
+    }
+    .driver-grid .ph { aspect-ratio: 4/5; }
+    .driver-prices { border-top: 1px solid var(--rule); }
+    .driver-prices .pr { display: grid; grid-template-columns: 1fr auto; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+    .driver-prices .pr .where { font-size: 19px; }
+    .driver-prices .pr .where small { display: block; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; }
+    .driver-prices .pr .euro { font-family: 'Italiana', serif; font-size: 28px; }
+
+    .events-strip {
+      background: var(--ink); color: var(--bg); padding: 96px 0;
+    }
+    .events-strip .lede { color: var(--ink-soft); }
+    .events-strip h2, .events-strip h3 { color: var(--bg); }
+    .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 36px; }
+    .events-grid .ev { padding: 24px; border: 1px solid var(--accent-2); }
+    .events-grid .ev .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
+    .events-grid .ev h4 { font-size: 28px; margin: 12px 0; color: var(--bg); }
+    .events-grid .ev p { color: var(--ink-soft); font-size: 15px; }
+
+    .request-form {
+      background: var(--paper); border: 1px solid var(--rule); padding: 48px; margin-top: 48px;
+    }
+    .request-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .request-form label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+    .request-form input, .request-form textarea, .request-form select {
+      width: 100%; padding: 14px 0;
+      border: none; border-bottom: 1px solid var(--rule);
+      background: transparent; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--ink);
+    }
+    .request-form input:focus, .request-form textarea:focus, .request-form select:focus { outline: none; border-bottom-color: var(--accent); }
+    .request-form textarea { min-height: 100px; resize: vertical; }
+    .request-form .full { grid-column: span 2; }
+
+    @media (max-width: 900px) {
+      .menu-row { grid-template-columns: 1fr; gap: 12px; }
+      .menus-grid { grid-template-columns: 1fr; }
+      .driver-grid { grid-template-columns: 1fr; }
+      .events-grid { grid-template-columns: 1fr; }
+      .request-form .row { grid-template-columns: 1fr; }
+      .request-form .full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Folio V · Concierge</span>
+      <h1 class="title display">A house that arranges<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">itself around you.</em></h1>
+      <p class="sub">From the chef's morning market to the driver waiting at Porto Airport — a short list of the things we do best, with rough prices. Custom requests, gladly.</p>
+    </div>
+  </section>
+
+  <!-- SUMMARY LIST -->
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 01</span>
+        <span class="eyebrow">The full list</span>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-row">
+          <span class="num">i.</span>
+          <div class="head">
+            <span class="label">Daily · in-house · most popular</span>
+            <h3>Private Chef</h3>
+          </div>
+          <div class="body">
+            <p>One chef, in the house, for a meal or for the day. Market-led, Minho-rooted, with menu signed off the evening before. Dietary needs accommodated without fuss.</p>
+            <ul>
+              <li>Breakfast service from €140</li>
+              <li>Tasting dinner from €95 / guest</li>
+              <li>Whole-day chef from €640</li>
+            </ul>
+          </div>
+          <div class="price"><span class="from">From</span><span class="amt">€95</span><span class="per">per guest, dinner</span></div>
+        </div>
+
+        <div class="menu-row">
+          <span class="num">ii.</span>
+          <div class="head">
+            <span class="label">On call · Mercedes V-Class</span>
+            <h3>Private Driver</h3>
+          </div>
+          <div class="body">
+            <p>A single, English-speaking driver for the duration of your stay. Mercedes V-Class, eight seats. Airport pickups, Porto evenings, day trips to the Douro and Galicia.</p>
+            <ul>
+              <li>Porto Airport transfer · €120</li>
+              <li>Half-day in Braga or Guimarães · €260</li>
+              <li>Whole-day, including Douro · €560</li>
+            </ul>
+          </div>
+          <div class="price"><span class="from">From</span><span class="amt">€120</span><span class="per">airport transfer</span></div>
+        </div>
+
+        <div class="menu-row">
+          <span class="num">iii.</span>
+          <div class="head">
+            <span class="label">Twice daily · included on longer stays</span>
+            <h3>Daily Housekeeping</h3>
+          </div>
+          <div class="body">
+            <p>Two visits a day — morning, for the beds and baths; evening, for turn-down, towels and a quiet tidy. Laundry on request.</p>
+            <ul>
+              <li>Daily housekeeping · €80 / day</li>
+              <li>Laundry service · from €40</li>
+              <li>Included on stays of seven nights or more</li>
+            </ul>
+          </div>
+          <div class="price"><span class="from">From</span><span class="amt">€80</span><span class="per">per day, twice daily</span></div>
+        </div>
+
+        <div class="menu-row">
+          <span class="num">iv.</span>
+          <div class="head">
+            <span class="label">At the gate · 22 kW · two stalls</span>
+            <h3>EV Charging</h3>
+          </div>
+          <div class="body">
+            <p>Two Type-2 chargers inside the gates, with a Tesla adaptor. Metered by kWh at cost; included up to 100 kWh on stays of five nights or more.</p>
+            <ul>
+              <li>Up to 100 kWh free, longer stays</li>
+              <li>Beyond, €0.34 / kWh (PT rate)</li>
+            </ul>
+          </div>
+          <div class="price"><span class="from">From</span><span class="amt">€0</span><span class="per">100 kWh inclusive</span></div>
+        </div>
+
+        <div class="menu-row">
+          <span class="num">v.</span>
+          <div class="head">
+            <span class="label">By arrangement · up to 60 guests</span>
+            <h3>Events &amp; Long Tables</h3>
+          </div>
+          <div class="body">
+            <p>The grounds hold a long table for thirty, comfortably; up to sixty for a cocktail reception. We can arrange florists, musicians, a celebrant, and a chef brigade. Quiet hours from 11 pm.</p>
+            <ul>
+              <li>Long-table dinner (24 guests) · from €5,400</li>
+              <li>Reception (50 guests) · from €9,800</li>
+              <li>Weddings &amp; private hire · on request</li>
+            </ul>
+          </div>
+          <div class="price"><span class="from">From</span><span class="amt">€5.4k</span><span class="per">private dinner</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEF MENUS -->
+  <section class="section" style="background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 02</span>
+        <span class="eyebrow">Sample chef menus</span>
+      </div>
+      <h2 style="max-width: 22ch; margin-bottom: 36px;">A few menus we return to. The chef will write you your own.</h2>
+
+      <div class="menus-grid">
+        <div class="menucard">
+          <span class="lbl">Menu A · The Minho table</span>
+          <h4>A long Saturday lunch.</h4>
+          <div class="course"><span class="c">i</span><span class="d">House cured ham, melon, almonds</span></div>
+          <div class="course"><span class="c">ii</span><span class="d">Caldo verde, with smoked sausage</span></div>
+          <div class="course"><span class="c">iii</span><span class="d">Bacalhau à brás, baby spinach</span></div>
+          <div class="course"><span class="c">iv</span><span class="d">Wood-fired suckling pig, citrus salad</span></div>
+          <div class="course"><span class="c">v</span><span class="d">Rabanadas, Moscatel ice cream</span></div>
+          <div class="course"><span class="c">vi</span><span class="d">Pastéis, espresso, an aged port</span></div>
+        </div>
+        <div class="menucard">
+          <span class="lbl">Menu B · Light &amp; coastal</span>
+          <h4>An easy summer dinner.</h4>
+          <div class="course"><span class="c">i</span><span class="d">Burnt-bread &amp; tomato, Galician olive oil</span></div>
+          <div class="course"><span class="c">ii</span><span class="d">Cured mackerel, peach, fennel</span></div>
+          <div class="course"><span class="c">iii</span><span class="d">Grilled sea bream, brown butter, capers</span></div>
+          <div class="course"><span class="c">iv</span><span class="d">Almond cake, raspberries, crème fraîche</span></div>
+        </div>
+        <div class="menucard">
+          <span class="lbl">Menu C · Children &amp; the table</span>
+          <h4>Family dinner, set early.</h4>
+          <div class="course"><span class="c">i</span><span class="d">Vegetable crudités &amp; warm bread</span></div>
+          <div class="course"><span class="c">ii</span><span class="d">Tomato pasta, parmesan, fresh basil</span></div>
+          <div class="course"><span class="c">iii</span><span class="d">Lemon roast chicken &amp; potatoes</span></div>
+          <div class="course"><span class="c">iv</span><span class="d">Chocolate mousse, on request</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRIVER -->
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 03</span>
+        <span class="eyebrow">Private driver — indicative pricing</span>
+      </div>
+      <div class="driver-grid">
+        <div class="ph"><span class="ph-label">The Mercedes V-Class, at the gate</span></div>
+        <div>
+          <p class="lede" style="margin-bottom: 28px;">"João has driven for the house for six years. He knows the back road to Pinhão and which bakery is open on Mondays."</p>
+          <div class="driver-prices">
+            <div class="pr"><span class="where">Porto Airport · OPO<small>1 hr, ≤ 8 guests + luggage</small></span><span class="euro">€120</span></div>
+            <div class="pr"><span class="where">Vigo Airport · VGO<small>1 hr 20</small></span><span class="euro">€160</span></div>
+            <div class="pr"><span class="where">Half-day in Braga / Guimarães<small>4 hr block</small></span><span class="euro">€260</span></div>
+            <div class="pr"><span class="where">Whole day, Douro Valley<small>9 hr, lunch break inclusive</small></span><span class="euro">€560</span></div>
+            <div class="pr"><span class="where">Whole day, Vigo &amp; Rías Baixas<small>10 hr</small></span><span class="euro">€640</span></div>
+            <div class="pr"><span class="where">Evening, Porto restaurant<small>round-trip, late return</small></span><span class="euro">€220</span></div>
+          </div>
+          <p class="muted" style="margin-top: 18px; font-size: 14px;">All prices include fuel, tolls, parking. Gratuity at your discretion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events-strip">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num" style="color: var(--accent-2);">§ 04</span>
+        <span class="eyebrow">Long tables &amp; private events</span>
+      </div>
+      <h2 style="max-width: 18ch; margin-bottom: 18px;">An estate built for slow celebrations.</h2>
+      <p class="lede" style="max-width: 50ch;">Long-table dinners under the loggia, a string quartet on the terrace, a small wedding under the olive trees. We host, on average, six events a year.</p>
+
+      <div class="events-grid">
+        <div class="ev">
+          <span class="lbl">Format 01</span>
+          <h4>The Long Table</h4>
+          <p>One table, 24 guests, set under the loggia. Six courses, paired with Minho wines. Quiet hours from 11 pm.</p>
+        </div>
+        <div class="ev">
+          <span class="lbl">Format 02</span>
+          <h4>Garden Reception</h4>
+          <p>Up to 60 guests, standing canapés &amp; bar. Live music in the olive grove. The pool stays open.</p>
+        </div>
+        <div class="ev">
+          <span class="lbl">Format 03</span>
+          <h4>Private Wedding</h4>
+          <p>Full estate hire, two nights minimum, sleeping capacity expanded to 18 with our partner villas. Celebrant on request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUEST FORM -->
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">
+        <span class="num">§ 05</span>
+        <span class="eyebrow">Request a service</span>
+      </div>
+      <h2 style="max-width: 20ch; margin-bottom: 12px;">Tell us what you'd like. We'll write back the same day.</h2>
+
+      <form class="request-form" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Sent — we\\'ll reply by tomorrow morning ✓';">
+        <div class="row">
+          <div><label>Your name</label><input type="text" placeholder="—" /></div>
+          <div><label>Email</label><input type="email" placeholder="—" /></div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Service</label>
+            <select>
+              <option>Private chef</option>
+              <option>Private driver</option>
+              <option>Daily housekeeping</option>
+              <option>EV charging</option>
+              <option>Events &amp; long tables</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div><label>Dates of stay</label><input type="text" placeholder="e.g. 12 – 19 July 2026" /></div>
+        </div>
+        <div class="row">
+          <div class="full"><label>What you have in mind</label><textarea placeholder="Tasting dinner for eight on the Saturday; vegetarian for two; allergic to shellfish; et cetera."></textarea></div>
+        </div>
+        <button class="btn primary" type="submit">Send request <span class="arrow">→</span></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>
