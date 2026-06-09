@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en" data-theme="linen">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>House Rules — Matos Essence Villa</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/site.js"></script>
+  <style>
+    .rules-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .sidenav { position: sticky; top: 80px; }
+    .sidenav h5 { font-family:'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; font-weight: 500; }
+    .sidenav a { display: block; padding: 8px 0; color: var(--ink-soft); border-bottom: 1px solid var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .sidenav a:hover { color: var(--accent); }
+
+    .rule-block { padding: 8px 0 56px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; }
+    .rule-block:last-of-type { border-bottom: none; margin-bottom: 0; }
+    .rule-block .head {
+      display: grid; grid-template-columns: 90px 1fr;
+      gap: 28px; align-items: baseline; margin-bottom: 20px;
+    }
+    .rule-block .rnum {
+      font-family: 'Italiana', serif;
+      font-size: 64px; line-height: 1;
+      color: var(--accent);
+    }
+    .rule-block h2 {
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1; margin: 0;
+    }
+    .rule-block .body {
+      padding-left: 118px;
+      max-width: 60ch;
+    }
+    .rule-block .body p { color: var(--ink-soft); font-size: 18px; margin-bottom: 16px; }
+    .rule-block .body p:last-child { margin-bottom: 0; }
+    .rule-block .body strong { color: var(--ink); font-weight: 600; }
+    .rule-block .body ul { padding-left: 18px; color: var(--ink-soft); font-size: 17px; }
+    .rule-block .body ul li { padding: 4px 0; }
+    .rule-block .body .aside {
+      margin-top: 18px; padding: 14px 18px;
+      background: var(--bg-2);
+      border-left: 2px solid var(--accent);
+      font-style: italic; font-size: 16px;
+      color: var(--ink-soft);
+    }
+    .rule-block .body .pill {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 12px;
+      margin: 4px 6px 4px 0;
+    }
+
+    /* Preamble */
+    .preamble {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      padding-bottom: 64px;
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--rule);
+      align-items: end;
+    }
+    .preamble .photo { aspect-ratio: 4/5; }
+    .preamble .copy h1 {
+      font-size: clamp(56px, 7vw, 96px);
+      line-height: 0.94; margin-bottom: 24px;
+    }
+    .preamble .copy p { color: var(--ink-soft); font-size: 19px; margin-bottom: 16px; max-width: 50ch; }
+    .preamble .copy p.dropcap::first-letter {
+      font-family: 'Italiana', serif;
+      font-size: 5.2em; float: left;
+      line-height: 0.85; padding-right: 12px; padding-top: 6px;
+      color: var(--accent);
+    }
+
+    /* Quick-glance card */
+    .glance {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--rule);
+      margin-bottom: 64px;
+      background: var(--paper);
+    }
+    .glance .cell {
+      padding: 24px 22px;
+      border-right: 1px solid var(--rule);
+    }
+    .glance .cell:last-child { border-right: none; }
+    .glance .cell .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+      display: block; margin-bottom: 10px;
+    }
+    .glance .cell .v {
+      font-family: 'Italiana', serif;
+      font-size: 28px; line-height: 1.1;
+      color: var(--ink);
+    }
+    .glance .cell .v small {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 16px;
+      color: var(--ink-soft); display: block; margin-top: 4px;
+    }
+
+    /* Closing acknowledgement */
+    .ack {
+      margin-top: 96px;
+      padding: 56px;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .ack h3 {
+      font-family: 'Italiana', serif;
+      font-size: clamp(32px, 3.4vw, 48px);
+      line-height: 1.1; margin: 0 0 18px;
+      color: var(--bg);
+    }
+    .ack h3 em { color: var(--accent-2); font-style: italic; font-family: 'Cormorant Garamond', serif; }
+    .ack p { color: var(--bg); opacity: 0.82; max-width: 64ch; margin-bottom: 14px; font-size: 17px; }
+    .ack .sign {
+      margin-top: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 22px;
+      color: var(--accent-2);
+    }
+
+    @media (max-width: 900px) {
+      .rules-layout { grid-template-columns: 1fr; gap: 32px; }
+      .sidenav { position: static; }
+      .preamble { grid-template-columns: 1fr; gap: 32px; }
+      .glance { grid-template-columns: 1fr 1fr; }
+      .glance .cell { border-bottom: 1px solid var(--rule); }
+      .glance .cell:nth-child(2n) { border-right: none; }
+      .rule-block .head { grid-template-columns: 64px 1fr; gap: 18px; }
+      .rule-block .rnum { font-size: 44px; }
+      .rule-block .body { padding-left: 0; }
+      .ack { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="the-house.html">The House</a>
+      <a href="guest-guide.html">Guest Guide</a>
+      <a href="house-rules.html">House Rules</a>
+      <a href="explore.html">Explore</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Reserve</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Folio V · A House Kept With Care</span>
+      <h1 class="title display">The house<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">rules.</em></h1>
+      <p class="sub">A handful of quiet conventions — gentle, unsurprising — that keep Matos Essence Villa the way the next family will find it. None of this is stern. Read it once, then forget it, and stay in the way you would in a friend's home.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <!-- Preamble -->
+      <div class="preamble">
+        <div class="photo"><img src="images/p50.jpg" alt="The villa from across the lawn — orange wood-clad façade, hills of Braga beyond." /><span class="ph-label">Plate · The west façade, evening</span></div>
+        <div class="copy">
+          <h2 style="font-size:clamp(40px,4.4vw,68px); line-height:0.96; margin-bottom:24px;">A family house,<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">kept with care.</em></h2>
+          <p class="dropcap">Matos Essence Villa was built for parents, children, and grandparents at the same long table — for slow mornings, longer lunches, and the kind of quiet that the hill above Braga still gives. We welcome families, small reunions, and friends who travel like family.</p>
+          <p>What follows is the small print, written long-hand. It exists so that the next family who walks through the gate finds the house exactly as you found it — quiet, pale, and ready.</p>
+        </div>
+      </div>
+
+      <!-- Quick-glance -->
+      <div class="glance">
+        <div class="cell">
+          <span class="k">Quiet Hours</span>
+          <span class="v">22:00 — 08:00<small>indoors after ten</small></span>
+        </div>
+        <div class="cell">
+          <span class="k">Maximum</span>
+          <span class="v">12 guests<small>no extra overnight visitors</small></span>
+        </div>
+        <div class="cell">
+          <span class="k">Pets</span>
+          <span class="v">Not on this stay<small>allergy-sensitive interiors</small></span>
+        </div>
+        <div class="cell">
+          <span class="k">Events</span>
+          <span class="v">By arrangement<small>no parties or large gatherings</small></span>
+        </div>
+      </div>
+
+      <div class="rules-layout">
+        <aside class="sidenav" aria-label="Rule index">
+          <h5>The Conventions</h5>
+          <a href="#quiet">I — Quiet after ten</a>
+          <a href="#family">II — A family house</a>
+          <a href="#pets">III — No pets</a>
+          <a href="#smoking">IV — No smoking</a>
+          <a href="#twelve">V — Twelve in residence</a>
+          <a href="#children">VI — Children &amp; the pool</a>
+          <a href="#care">VII — Care of the house</a>
+          <a href="#arrivals">VIII — Arrival &amp; departure</a>
+          <a href="#deposit">IX — Deposit &amp; damages</a>
+          <a href="#law">X — A note on the law</a>
+        </aside>
+
+        <div>
+
+          <!-- I — Quiet -->
+          <article class="rule-block" id="quiet">
+            <div class="head">
+              <span class="rnum">I.</span>
+              <h2>Quiet after ten.</h2>
+            </div>
+            <div class="body">
+              <p>The valley carries sound. From <strong>22:00 to 08:00</strong>, we ask that voices stay low, music stays indoors, and the garden is left to the crickets and the owls. The neighbours have been kind to us for many years; we like to keep it that way.</p>
+              <p>This applies equally to the terraces, the pool deck, and the lawn — sound travels remarkably well across the valley after dark.</p>
+              <div class="aside">A glass of wine on the terrace at midnight is entirely the point. A speaker on the terrace at midnight, less so.</div>
+            </div>
+          </article>
+
+          <!-- II — Family house -->
+          <article class="rule-block" id="family">
+            <div class="head">
+              <span class="rnum">II.</span>
+              <h2>A family house, not a party house.</h2>
+            </div>
+            <div class="body">
+              <p>Matos Essence Villa is oriented toward families, multigenerational stays, small reunions, and quiet getaways. It is not a venue.</p>
+              <p>The following are <strong>not permitted</strong> without prior written arrangement:</p>
+              <ul>
+                <li>Parties, raves, or any gathering with amplified music outdoors</li>
+                <li>Stag and hen weekends, bachelor and bachelorette parties</li>
+                <li>Commercial photography, filming, or content shoots</li>
+                <li>Brand activations, pop-ups, or any commercial event</li>
+                <li>Weddings or ceremonies beyond the twelve in residence</li>
+              </ul>
+              <p>Long-table dinners, birthday lunches, anniversary weekends — exactly what the house was made for. If you are unsure whether your gathering fits the spirit of the house, please write to us; we are happy to help find the answer.</p>
+            </div>
+          </article>
+
+          <!-- III — Pets -->
+          <article class="rule-block" id="pets">
+            <div class="head">
+              <span class="rnum">III.</span>
+              <h2>No pets.</h2>
+            </div>
+            <div class="body">
+              <p>With regret. The house is finished in pale pine, wool rugs and linen, and we keep it allergy-safe for every guest who arrives after you. This includes well-behaved dogs, emotional-support animals, and service animals beyond those mandated by Portuguese law.</p>
+              <p>If you would like a recommendation for boarding in or around Braga, the concierge will arrange it before your arrival.</p>
+            </div>
+          </article>
+
+          <!-- IV — Smoking -->
+          <article class="rule-block" id="smoking">
+            <div class="head">
+              <span class="rnum">IV.</span>
+              <h2>No smoking indoors.</h2>
+            </div>
+            <div class="body">
+              <p>No smoking, vaping, cigars, or pipes inside the house, on the covered terraces, or by the pool. Cannabis is not permitted on the property at all, in line with Portuguese law.</p>
+              <p>A quiet corner of the garden — by the lower wall, with an ashtray and a bench — is set aside for those who must. Please dispose of cigarette ends thoughtfully; the garden is dry in summer.</p>
+              <div class="aside">A faint trace of smoke in the linens means a full re-laundering and, in the worst case, a deep-clean charge against the deposit. We would rather it never came to that.</div>
+            </div>
+          </article>
+
+          <!-- V — Twelve -->
+          <article class="rule-block" id="twelve">
+            <div class="head">
+              <span class="rnum">V.</span>
+              <h2>Twelve in residence.</h2>
+            </div>
+            <div class="body">
+              <p>The house sleeps <strong>twelve guests</strong>. That is also the maximum number of guests we permit overnight, including children over the age of two. Infants in a travel cot are not counted.</p>
+              <p>Daytime visitors — family meeting you for lunch, friends from Porto for an afternoon — are warmly welcome. We ask only that you let the housekeeper know a day ahead, so she can lay an extra place and the kitchen is provisioned accordingly. Daytime visitors are asked to leave by 22:00.</p>
+            </div>
+          </article>
+
+          <!-- VI — Children -->
+          <article class="rule-block" id="children">
+            <div class="head">
+              <span class="rnum">VI.</span>
+              <h2>Children, very welcome.</h2>
+            </div>
+            <div class="body">
+              <p>This is a house built around a long kitchen and a long lawn — children are part of how it is meant to be used. We provide, on request:</p>
+              <span class="pill">Travel cot</span>
+              <span class="pill">High chair</span>
+              <span class="pill">Stair gates</span>
+              <span class="pill">Pool fence</span>
+              <span class="pill">Bath step</span>
+              <span class="pill">Baby monitor</span>
+              <p style="margin-top: 18px;">The indoor pool is the only meaningful hazard in the house. We ask that <strong>a responsible adult is at the poolside whenever a child under twelve is in or near the water</strong>. The pool door has a code; please keep it closed when not in use. There are flotation aids in the cupboard by the steam room.</p>
+            </div>
+          </article>
+
+          <!-- VII — Care -->
+          <article class="rule-block" id="care">
+            <div class="head">
+              <span class="rnum">VII.</span>
+              <h2>Care of the house.</h2>
+            </div>
+            <div class="body">
+              <p>A short list of small things that keep the house at its best:</p>
+              <ul>
+                <li><strong>Shoes off</strong> in the living rooms and bedrooms. Slippers in every wardrobe; we like the local felt ones.</li>
+                <li><strong>Wet feet</strong> dried in the pool wing before the wool rugs in the living room.</li>
+                <li><strong>Wine and dark juices</strong> kept away from the pale linen sofas and the dining-room runner.</li>
+                <li><strong>The wood-burning stove</strong> is for the housekeeper to light; please ask. The flue is temperamental on south winds.</li>
+                <li><strong>Candles</strong> are stocked in the kitchen drawer — please use the ceramic holders provided, never directly on wood.</li>
+                <li><strong>Windows and doors</strong> closed if the air-conditioning is running, please.</li>
+                <li><strong>Bicycles, paddleboards, and the kayak</strong> — by all means, with a word to Inês first.</li>
+                <li><strong>Furniture</strong> — please do not move the heavier pieces; the floor is solid pine and marks easily.</li>
+              </ul>
+              <div class="aside">Accidents happen — a spilled glass, a chipped plate, a wet patch on the floor. Please tell the housekeeper, in person or by note. We are quietly grateful when we know in time to fix it before it becomes a stain.</div>
+            </div>
+          </article>
+
+          <!-- VIII — Arrivals -->
+          <article class="rule-block" id="arrivals">
+            <div class="head">
+              <span class="rnum">VIII.</span>
+              <h2>Arrival &amp; departure.</h2>
+            </div>
+            <div class="body">
+              <p><strong>Check-in</strong> from <strong>16:00</strong> on the day of arrival. <strong>Check-out</strong> by <strong>11:00</strong> on the day of departure. The housekeeping team uses the hours between to turn the house around for the next guests.</p>
+              <p>Earlier arrival or later departure is often possible, with notice — please ask at least 48 hours in advance and we will see what the calendar allows. The chef, the driver and the housekeeper arrange themselves around your hours.</p>
+              <p>On departure, we ask only that you leave the kitchen as you would in a friend's home — dishwashers running, perishables in the bin, used linen on the bed. The rest is ours.</p>
+            </div>
+          </article>
+
+          <!-- IX — Deposit -->
+          <article class="rule-block" id="deposit">
+            <div class="head">
+              <span class="rnum">IX.</span>
+              <h2>Deposit &amp; damages.</h2>
+            </div>
+            <div class="body">
+              <p>A refundable <strong>damage deposit of €2,000</strong> is held against the card on file at booking and released within seven days of departure, against a final inspection by the housekeeper.</p>
+              <p>Ordinary wear is expected and never charged — the small scuff on a skirting board, a wine ring on a coaster, a misplaced glass. We deduct only against material loss: a broken piece of art, persistent smoke odour, a stain that cannot be lifted, missing inventory.</p>
+              <p>For anything significant, we contact you directly, in writing, with photographs and an invoice from the relevant trade, before the deposit is touched.</p>
+            </div>
+          </article>
+
+          <!-- X — Law -->
+          <article class="rule-block" id="law">
+            <div class="head">
+              <span class="rnum">X.</span>
+              <h2>A note on the law.</h2>
+            </div>
+            <div class="body">
+              <p>Matos Essence Villa is operated under a Portuguese <em>Alojamento Local</em> licence. By staying, you and every guest in your party agree to the conventions on this page, to the terms of the booking, and to Portuguese law.</p>
+              <p>The lead guest on the booking is responsible for the conduct of every guest and visitor at the property. Repeated or material breach of any of the above — most often, an unauthorised party — entitles us, with regret, to ask the party to leave without refund.</p>
+              <p>None of which we expect ever to need. We mention it for completeness.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Closing acknowledgement -->
+      <aside class="ack">
+        <h3>None of this <em>is meant to be stern.</em></h3>
+        <p>It is simply how a house of this kind stays itself — quiet, generous, and ready for the next family who walks through the gate. We're glad you'll be one of them.</p>
+        <p>If anything here is unclear, or there is a corner of your stay we should think about before you arrive, please write. We answer within the day.</p>
+        <span class="sign">— Inês &amp; the house team</span>
+      </aside>
+
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
+      </div>
+      <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
+      <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="js/tweaks-init.jsx"></script>
+</body>
+</html>
