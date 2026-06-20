@@ -119,6 +119,53 @@ hr.rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
   .nav { flex-wrap: wrap; gap: 14px 18px; }
 }
 
+/* ===== Mobile burger navigation =====
+   Hidden by default. With JS present (html.nav-js) the nav collapses into a
+   burger + dropdown below 860px; without JS the wrapping nav above remains. */
+.nav-toggle { display: none; }
+
+@media (max-width: 860px) {
+  .nav-js .topbar-inner { flex-direction: row; align-items: center; gap: 0; }
+
+  .nav-js .nav-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 44px; height: 44px; margin-right: -11px; padding: 11px;
+    background: none; border: none; color: var(--ink); cursor: pointer; z-index: 60;
+  }
+  .nav-js .nav-toggle span {
+    display: block; width: 22px; height: 1.5px; background: currentColor;
+    transition: transform .28s ease, opacity .2s ease;
+  }
+  .nav-js .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-js .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-js .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-js .topbar .nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0;
+    margin: 0; padding: 4px 24px 18px;
+    background: var(--bg); border-bottom: 1px solid var(--rule);
+    max-height: 0; overflow: hidden; opacity: 0; visibility: hidden;
+    transition: max-height .32s ease, opacity .24s ease, visibility 0s linear .32s;
+  }
+  .nav-js .topbar .nav.open {
+    max-height: calc(100dvh - 60px); overflow-y: auto; opacity: 1; visibility: visible;
+    box-shadow: 0 22px 40px rgba(20, 16, 12, 0.12);
+    transition: max-height .36s ease, opacity .24s ease, visibility 0s;
+  }
+  .nav-js .topbar .nav a {
+    width: 100%; font-size: 14px; letter-spacing: 0.16em;
+    padding: 15px 2px; border-bottom: 1px solid var(--rule); padding-bottom: 15px;
+  }
+  .nav-js .topbar .nav a:last-child { border-bottom: none; }
+
+  body.nav-open { overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-js .topbar .nav, .nav-js .nav-toggle span { transition: none; }
+  }
+}
+
 /* ---------- Footer ---------- */
 .foot {
   margin-top: 120px;
