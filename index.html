@@ -94,6 +94,26 @@
       z-index: 1;
     }
 
+    /* Hero carousel — crossfading highlight slides */
+    .hero-photo .hslide { opacity: 0; transition: opacity 1.2s ease; z-index: 0; }
+    .hero-photo .hslide.is-active { opacity: 1; }
+    .hero-photo .overlay .cap { display: block; }
+    .hero-dots {
+      position: absolute; right: 14px; top: 12px;
+      display: flex; gap: 7px; z-index: 2;
+    }
+    .hero-dots button {
+      width: 8px; height: 8px; border-radius: 50%;
+      border: 1px solid var(--ink); background: transparent;
+      padding: 0; cursor: pointer; opacity: 0.45;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .hero-dots button:hover { opacity: 0.8; }
+    .hero-dots button.is-active { background: var(--ink); opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-photo .hslide { transition: none; }
+    }
+
     .hero-coords {
       display: flex; justify-content: space-between; align-items: center;
       padding: 14px 0 22px; border-bottom: 1px solid var(--rule);
@@ -218,13 +238,19 @@
         </div>
       </div>
 
-      <div class="hero-photo">
-        <img src="images/p17.jpg" alt="The living room of Braga Essence Villa — vaulted wood ceiling, light pine floor, garden beyond." />
+      <div class="hero-photo" id="heroCarousel">
+        <img class="hslide is-active" src="images/p40.jpg" alt="The indoor heated pool, glazed to the garden." data-meta="The Indoor Pool" data-cap="heated, glazed to the garden, all-season" />
+        <img class="hslide" src="images/p17.jpg" alt="The living room — vaulted wood ceiling, light pine floor, garden beyond." data-meta="The Living Room" data-cap="afternoon light, looking south to the garden" loading="lazy" />
+        <img class="hslide" src="images/p01.jpg" alt="A suite — soft light, white linen, curtained windows." data-meta="The Suites" data-cap="calm, white, curtained against the morning" loading="lazy" />
+        <img class="hslide" src="images/p20.jpg" alt="The kitchen and dining room — bamboo ceiling, long table, valley views." data-meta="Kitchen &amp; Dining" data-cap="bamboo ceiling, a long table, valley views" loading="lazy" />
+        <img class="hslide" src="Pictures/DSC06360-HDR.jpg" alt="The Garden Suite — linen-dressed bed and a view of the lawn." data-meta="The Garden Suite" data-cap="linen, light, and a view of the lawn" loading="lazy" />
+        <img class="hslide" src="images/p50.jpg" alt="The villa from across the lawn — wood-clad façade, the hills of Braga beyond." data-meta="The Estate" data-cap="the villa from across the lawn, hills beyond" loading="lazy" />
         <div class="overlay">
-          <span class="meta">The Living Room</span>
-          afternoon light, looking south to the garden
+          <span class="meta">The Indoor Pool</span>
+          <span class="cap">heated, glazed to the garden, all-season</span>
         </div>
         <span class="credit">[ Braga Essence Villa ]</span>
+        <div class="hero-dots"></div>
       </div>
 
       <div class="hero-coords">
@@ -373,6 +399,46 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>
+  // Hero highlight carousel — auto-crossfade with dots
+  (function () {
+    var root = document.getElementById('heroCarousel');
+    if (!root) return;
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.hslide'));
+    if (slides.length < 2) return;
+    var metaEl = root.querySelector('.overlay .meta');
+    var capEl = root.querySelector('.overlay .cap');
+    var dotsWrap = root.querySelector('.hero-dots');
+    var i = 0, timer = null;
+    var DELAY = 5000;
+
+    slides.forEach(function (s, idx) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Show highlight ' + (idx + 1));
+      if (idx === 0) b.className = 'is-active';
+      b.addEventListener('click', function () { go(idx); restart(); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function go(n) {
+      slides[i].classList.remove('is-active');
+      dots[i].classList.remove('is-active');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active');
+      dots[i].classList.add('is-active');
+      var s = slides[i];
+      if (metaEl) metaEl.textContent = s.getAttribute('data-meta') || '';
+      if (capEl) capEl.textContent = s.getAttribute('data-cap') || '';
+    }
+    function start() { timer = setInterval(function () { go(i + 1); }, DELAY); }
+    function restart() { clearInterval(timer); start(); }
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) start();
+  })();
+</script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="js/tweaks-init.jsx"></script>
 </body>
