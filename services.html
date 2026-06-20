@@ -28,16 +28,6 @@
     .menu-row .price .amt { font-family: 'Italiana', serif; font-size: clamp(36px, 4vw, 56px); line-height: 1; display: block; margin-top: 6px; }
     .menu-row .price .per { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); display: block; margin-top: 4px; font-size: 15px; }
 
-    .menus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-    .menucard {
-      border: 1px solid var(--rule); padding: 28px; background: var(--paper);
-    }
-    .menucard .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
-    .menucard h4 { font-size: 28px; margin: 12px 0 16px; }
-    .menucard .course { padding: 8px 0; border-top: 1px dashed var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 14px; }
-    .menucard .course:first-of-type { border-top: none; }
-    .menucard .course .c { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
-    .menucard .course .d { color: var(--ink-soft); font-size: 16px; }
 
     .driver-grid {
       display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start;
@@ -76,7 +66,6 @@
 
     @media (max-width: 900px) {
       .menu-row { grid-template-columns: 1fr; gap: 12px; }
-      .menus-grid { grid-template-columns: 1fr; }
       .driver-grid { grid-template-columns: 1fr; }
       .events-grid { grid-template-columns: 1fr; }
       .request-form .row { grid-template-columns: 1fr; }
@@ -207,57 +196,16 @@
     </div>
   </section>
 
-  <!-- CHEF MENUS -->
-  <section class="section" style="background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
-    <div class="wrap">
-      <div class="kicker">
-        <span class="num">§ 02</span>
-        <span class="eyebrow">Sample chef menus</span>
-      </div>
-      <h2 style="max-width: 22ch; margin-bottom: 36px;">A few menus we return to. The chef will write you your own.</h2>
-
-      <div class="menus-grid">
-        <div class="menucard">
-          <span class="lbl">Menu A · The Minho table</span>
-          <h4>A long Saturday lunch.</h4>
-          <div class="course"><span class="c">i</span><span class="d">House cured ham, melon, almonds</span></div>
-          <div class="course"><span class="c">ii</span><span class="d">Caldo verde, with smoked sausage</span></div>
-          <div class="course"><span class="c">iii</span><span class="d">Bacalhau à brás, baby spinach</span></div>
-          <div class="course"><span class="c">iv</span><span class="d">Wood-fired suckling pig, citrus salad</span></div>
-          <div class="course"><span class="c">v</span><span class="d">Rabanadas, Moscatel ice cream</span></div>
-          <div class="course"><span class="c">vi</span><span class="d">Pastéis, espresso, an aged port</span></div>
-        </div>
-        <div class="menucard">
-          <span class="lbl">Menu B · Light &amp; coastal</span>
-          <h4>An easy summer dinner.</h4>
-          <div class="course"><span class="c">i</span><span class="d">Burnt-bread &amp; tomato, Galician olive oil</span></div>
-          <div class="course"><span class="c">ii</span><span class="d">Cured mackerel, peach, fennel</span></div>
-          <div class="course"><span class="c">iii</span><span class="d">Grilled sea bream, brown butter, capers</span></div>
-          <div class="course"><span class="c">iv</span><span class="d">Almond cake, raspberries, crème fraîche</span></div>
-        </div>
-        <div class="menucard">
-          <span class="lbl">Menu C · Children &amp; the table</span>
-          <h4>Family dinner, set early.</h4>
-          <div class="course"><span class="c">i</span><span class="d">Vegetable crudités &amp; warm bread</span></div>
-          <div class="course"><span class="c">ii</span><span class="d">Tomato pasta, parmesan, fresh basil</span></div>
-          <div class="course"><span class="c">iii</span><span class="d">Lemon roast chicken &amp; potatoes</span></div>
-          <div class="course"><span class="c">iv</span><span class="d">Chocolate mousse, on request</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- DRIVER -->
   <section class="section">
     <div class="wrap">
       <div class="kicker">
-        <span class="num">§ 03</span>
+        <span class="num">§ 02</span>
         <span class="eyebrow">Private driver — indicative pricing</span>
       </div>
       <div class="driver-grid">
         <div class="ph"><span class="ph-label">The Mercedes V-Class, at the gate</span></div>
         <div>
-          <p class="lede" style="margin-bottom: 28px;">"João has driven for the house for six years. He knows the back road to Pinhão and which bakery is open on Mondays."</p>
           <div class="driver-prices">
             <div class="pr"><span class="where">Porto Airport · OPO<small>1 hr, ≤ 8 guests + luggage</small></span><span class="euro">€120</span></div>
             <div class="pr"><span class="where">Vigo Airport · VGO<small>1 hr 20</small></span><span class="euro">€160</span></div>
@@ -276,7 +224,7 @@
   <section class="events-strip">
     <div class="wrap">
       <div class="kicker">
-        <span class="num" style="color: var(--accent-2);">§ 04</span>
+        <span class="num" style="color: var(--accent-2);">§ 03</span>
         <span class="eyebrow">Long tables &amp; private events</span>
       </div>
       <h2 style="max-width: 18ch; margin-bottom: 18px;">An estate built for slow celebrations.</h2>
@@ -306,7 +254,7 @@
   <section class="section">
     <div class="wrap">
       <div class="kicker">
-        <span class="num">§ 05</span>
+        <span class="num">§ 04</span>
         <span class="eyebrow">Request a service</span>
       </div>
       <h2 style="max-width: 20ch; margin-bottom: 12px;">Tell us what you'd like. We'll write back the same day.</h2>
