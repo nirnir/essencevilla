@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reserve — Matos Essence Villa</title>
+  <title>Reserve — Braga Essence Villa</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/site.js"></script>
   <style>
@@ -85,7 +85,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <a href="index.html" class="wordmark" style="border:none">Braga Essence <span class="amp">Villa</span></a>
     <nav class="nav" aria-label="Primary">
       <a href="index.html">Overview</a>
       <a href="the-house.html">The House</a>
@@ -93,6 +93,7 @@
       <a href="house-rules.html">House Rules</a>
       <a href="explore.html">Explore</a>
       <a href="services.html">Services</a>
+      <a href="places.html">Places</a>
       <a href="contact.html">Reserve</a>
     </nav>
   </div>
@@ -111,33 +112,33 @@
     <div class="wrap">
       <div class="reserve-layout">
         <!-- FORM -->
-        <form class="reserve-form" onsubmit="event.preventDefault(); this.querySelector('button.btn').innerHTML='Sent — we&rsquo;ll reply within the day ✓';">
+        <form class="reserve-form" onsubmit="return sendInquiry(this)">
           <div class="head">
             <h2>Direct inquiry</h2>
             <span class="num">§ 01 · Form</span>
           </div>
           <div class="row">
-            <div><label>First name</label><input type="text" placeholder="—" /></div>
-            <div><label>Last name</label><input type="text" placeholder="—" /></div>
+            <div><label>First name</label><input type="text" name="firstName" placeholder="—" /></div>
+            <div><label>Last name</label><input type="text" name="lastName" placeholder="—" /></div>
           </div>
           <div class="row">
-            <div><label>Email</label><input type="email" placeholder="—" /></div>
-            <div><label>Telephone</label><input type="tel" placeholder="+ ..." /></div>
+            <div><label>Email</label><input type="email" name="email" placeholder="—" /></div>
+            <div><label>Telephone</label><input type="tel" name="phone" placeholder="+ ..." /></div>
           </div>
           <div class="row">
-            <div><label>Check-in</label><input type="date" /></div>
-            <div><label>Check-out</label><input type="date" /></div>
+            <div><label>Check-in</label><input type="date" name="checkin" /></div>
+            <div><label>Check-out</label><input type="date" name="checkout" /></div>
           </div>
           <div class="row">
             <div>
               <label>Number of guests</label>
-              <select>
-                <option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 guests</option><option>8 guests</option><option>9 guests</option><option>10 guests</option><option>11 guests</option><option>12 guests</option>
+              <select name="guests">
+                <option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 guests</option><option>8 guests</option><option>9 guests</option><option>10 guests</option>
               </select>
             </div>
             <div>
               <label>Reason for the stay</label>
-              <select>
+              <select name="reason">
                 <option>Family holiday</option>
                 <option>Friends &amp; long weekend</option>
                 <option>Wedding / celebration</option>
@@ -150,7 +151,7 @@
           <div class="row">
             <div class="full">
               <label>A note, if you'd like</label>
-              <textarea placeholder="What you're hoping for from the stay. Any services we should plan around (chef, driver, EV, events). Dietary needs."></textarea>
+              <textarea name="note" placeholder="What you're hoping for from the stay. Any services we should plan around (chef, driver, EV, events). Dietary needs."></textarea>
             </div>
           </div>
           <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
@@ -169,23 +170,13 @@
           <div style="margin-top: 28px;">
             <div class="channel">
               <span class="ico">✉</span>
-              <div><span class="name">stay@matos21.pt</span><span class="sub">replies within the day</span></div>
-              <a href="mailto:stay@matos21.pt">Email →</a>
-            </div>
-            <div class="channel">
-              <span class="ico">☏</span>
-              <div><span class="name">+351 — 933 — 700 — 412</span><span class="sub">Mon–Sat · 9–19, Western European time</span></div>
-              <a href="tel:+351933700412">Call →</a>
-            </div>
-            <div class="channel">
-              <span class="ico">◯</span>
-              <div><span class="name">WhatsApp</span><span class="sub">+351 933 700 412</span></div>
-              <a href="https://wa.me/351933700412">Open →</a>
+              <div><span class="name">nir.erlich@gmail.com</span><span class="sub">replies within the day</span></div>
+              <a href="mailto:nir.erlich@gmail.com">Email →</a>
             </div>
             <div class="channel">
               <span class="ico">✦</span>
               <div><span class="name">Airbnb listing</span><span class="sub">read reviews, instant book</span></div>
-              <a href="#">View →</a>
+              <a href="https://www.airbnb.com/rooms/1665858564801488979?guests=1&amp;adults=1&amp;s=67&amp;unique_share_id=2749985d-c7de-4b66-b914-62bfa663e3e7" target="_blank" rel="noopener">View →</a>
             </div>
           </div>
 
@@ -193,11 +184,11 @@
           <div style="margin-top: 36px;">
             <div class="meta-line">§ 03 — Indicative rates</div>
             <div class="rates">
-              <div class="rate"><span class="lbl">Low — Nov–Mar</span><span class="v">€780</span><span class="per">per night</span></div>
-              <div class="rate"><span class="lbl">Shoulder</span><span class="v">€1,180</span><span class="per">per night</span></div>
-              <div class="rate"><span class="lbl">High — Jun–Sep</span><span class="v">€1,640</span><span class="per">per night</span></div>
+              <div class="rate"><span class="lbl">Low — Nov–Mar</span><span class="v">€490</span><span class="per">per night</span></div>
+              <div class="rate"><span class="lbl">Shoulder</span><span class="v">€680</span><span class="per">per night</span></div>
+              <div class="rate"><span class="lbl">High — Jun–Sep</span><span class="v">€950</span><span class="per">per night</span></div>
             </div>
-            <p class="muted" style="font-size: 14px; margin-top: 10px;">5-night minimum in high season; 3-night minimum elsewhere. Cleaning &amp; tourism tax included.</p>
+            <p class="muted" style="font-size: 14px; margin-top: 10px;">Cleaning &amp; tourism tax included.</p>
           </div>
         </aside>
       </div>
@@ -212,35 +203,10 @@
           <div class="pol"><span class="lbl">Check-in</span><h4>From 16:00</h4><p>Early arrivals welcome to wait by the pool; rooms not always ready before four.</p></div>
           <div class="pol"><span class="lbl">Check-out</span><h4>By 11:00</h4><p>Late check-out sometimes possible; ask the morning before.</p></div>
           <div class="pol"><span class="lbl">Deposit</span><h4>30% to confirm</h4><p>Balance due 30 days before arrival; we accept SEPA &amp; card.</p></div>
-          <div class="pol"><span class="lbl">Cancellation</span><h4>Free, to 30 days</h4><p>Within 30 days, 50% refundable; within 7 days, non-refundable.</p></div>
+          <div class="pol"><span class="lbl">Cancellation</span><h4>Free, 24 hours</h4><p>Full refund if cancelled within 24 hours of booking.</p></div>
           <div class="pol"><span class="lbl">Children</span><h4>Warmly welcome</h4><p>Cribs and highchairs available, no charge. Pool unfenced — we advise supervision.</p></div>
-          <div class="pol"><span class="lbl">Pets</span><h4>On request</h4><p>One well-mannered dog per stay, on the ground floor.</p></div>
+          <div class="pol"><span class="lbl">Pets</span><h4>Not allowed</h4><p>The interiors are kept allergy-sensitive, so we're unable to host pets.</p></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ARRIVAL DAY -->
-  <section class="arrival" style="background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
-    <div class="wrap">
-      <div class="kicker">
-        <span class="num">§ 05</span>
-        <span class="eyebrow">A note on arrival</span>
-      </div>
-      <div class="arrival-grid">
-        <div>
-          <h2 style="max-width: 16ch; margin-bottom: 28px;">The first afternoon, as we do it.</h2>
-          <ol>
-            <li><span class="when">15:30</span><span class="what"><strong>Driver waits</strong>at Porto Airport arrivals, sign with your name</span></li>
-            <li><span class="when">16:30</span><span class="what"><strong>Welcome at the gate</strong>Inês greets you with a cold glass and the keys</span></li>
-            <li><span class="when">16:45</span><span class="what"><strong>House tour, ~20 min</strong>the indoor pool, the steam room, the gate codes, the Wi-Fi</span></li>
-            <li><span class="when">17:30</span><span class="what"><strong>Settle in</strong>swim, nap, walk the grounds — your time, undisturbed</span></li>
-            <li><span class="when">19:30</span><span class="what"><strong>Aperitivo on the lawn</strong>vinho verde, olives, the long view</span></li>
-            <li><span class="when">20:30</span><span class="what"><strong>Dinner, if you've asked</strong>chef arrives quietly; dinner served when you wish</span></li>
-          </ol>
-          <p class="muted" style="margin-top: 24px;">Everything above is optional and adjustable. Tell us how you'd like to arrive, and we'll write to the shape of it.</p>
-        </div>
-        <div class="photo" style="aspect-ratio: 4/5; border:1px solid var(--rule);"><img src="images/p55.jpg" alt="The driveway and garden at Matos Essence Villa in late sun." /><span class="ph-label">Plate · the gate at five</span></div>
       </div>
     </div>
   </section>
@@ -252,7 +218,7 @@
       <p class="lede" style="margin: 0 auto 36px; text-align:center;">— from the house, with thanks.</p>
       <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
         <a href="index.html" class="btn">Back to overview</a>
-        <a href="mailto:stay@matos21.pt" class="btn primary">Send us a note <span class="arrow">→</span></a>
+        <a href="mailto:nir.erlich@gmail.com" class="btn primary">Send us a note <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -262,16 +228,42 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <div class="word-big">Braga Essence<br /><em>Villa</em></div>
         <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
       </div>
       <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
       <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
-      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="https://www.airbnb.com/rooms/1665858564801488979?guests=1&amp;adults=1&amp;s=67&amp;unique_share_id=2749985d-c7de-4b66-b914-62bfa663e3e7" target="_blank" rel="noopener">Airbnb Listing</a><a href="mailto:nir.erlich@gmail.com">nir.erlich@gmail.com</a></div>
     </div>
-    <div class="foot-base"><span>© 2026 Matos Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
+    <div class="foot-base"><span>© 2026 Braga Essence Villa</span><span>São Pedro de Este · Minho · Portugal</span></div>
   </div>
 </footer>
+
+<script>
+function sendInquiry(form) {
+  var f = form.elements;
+  var val = function (n) { return f[n] ? (f[n].value || '').trim() : ''; };
+  var name = (val('firstName') + ' ' + val('lastName')).trim();
+  var subject = 'Villa inquiry' + (name ? ' — ' + name : '');
+  var body = [
+    'Name: ' + name,
+    'Email: ' + val('email'),
+    'Telephone: ' + val('phone'),
+    'Check-in: ' + val('checkin'),
+    'Check-out: ' + val('checkout'),
+    'Guests: ' + val('guests'),
+    'Reason: ' + val('reason'),
+    '',
+    'Note:',
+    val('note')
+  ].join('\n');
+  window.location.href = 'mailto:nir.erlich@gmail.com?subject=' +
+    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  var btn = form.querySelector('button.btn');
+  if (btn) btn.innerHTML = 'Opening your email… ✓';
+  return false;
+}
+</script>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>

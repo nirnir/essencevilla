@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The House — Matos Essence Villa</title>
+  <title>The House — Braga Essence Villa</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/site.js"></script>
   <style>
@@ -30,11 +30,66 @@
       border-top: 1px solid var(--rule); align-items: start;
     }
     .room:last-child { border-bottom: 1px solid var(--rule); }
+    .room.unit { border-top: 2px solid var(--accent); }
+    .room.unit .eyebrow { color: var(--accent); }
     .room .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--accent); padding-top: 8px; }
     .room h3 { font-size: clamp(36px, 4vw, 60px); margin-bottom: 18px; line-height: 0.96; }
     .room p { color: var(--ink-soft); max-width: 50ch; }
     .room .roomspec { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
     .room .photo { aspect-ratio: 4/3; }
+
+    /* Per-room photo carousel */
+    .room-gallery {
+      position: relative; aspect-ratio: 4/3;
+      border: 1px solid var(--rule); overflow: hidden;
+      background: var(--bg-2);
+    }
+    .room-gallery .rg-track {
+      display: flex; height: 100%;
+      transition: transform .55s cubic-bezier(.2,.6,.2,1);
+      will-change: transform;
+    }
+    .room-gallery .rg-track img {
+      flex: 0 0 100%; width: 100%; height: 100%;
+      object-fit: cover; object-position: center; display: block;
+      -webkit-user-drag: none; user-select: none;
+    }
+    .room-gallery .ph-label {
+      position: absolute; left: 0; bottom: 0;
+      padding: 10px 12px; margin: 0;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink);
+      background: color-mix(in oklab, var(--paper) 86%, transparent);
+      border-top: 1px solid var(--rule); border-right: 1px solid var(--rule);
+      backdrop-filter: blur(4px); z-index: 2;
+    }
+    .room-gallery .rg-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 999px;
+      display: grid; place-items: center; cursor: pointer;
+      background: color-mix(in oklab, var(--paper) 84%, transparent);
+      border: 1px solid var(--rule); color: var(--ink);
+      backdrop-filter: blur(4px); z-index: 3;
+      font-size: 17px; line-height: 1; padding: 0;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .room-gallery .rg-btn:hover { background: var(--paper); border-color: var(--accent); color: var(--accent); }
+    .room-gallery .rg-prev { left: 12px; }
+    .room-gallery .rg-next { right: 12px; }
+    .room-gallery .rg-dots {
+      position: absolute; bottom: 13px; right: 13px;
+      display: flex; gap: 6px; z-index: 3;
+    }
+    .room-gallery .rg-dots button {
+      width: 7px; height: 7px; border-radius: 999px; padding: 0;
+      border: 1px solid var(--ink); background: transparent;
+      cursor: pointer; opacity: .45; transition: opacity .2s, background .2s;
+    }
+    .room-gallery .rg-dots button.active { background: var(--ink); opacity: 1; }
+    /* controls only when more than one photo */
+    .room-gallery .rg-btn, .room-gallery .rg-dots { display: none; }
+    .room-gallery.is-multi .rg-btn { display: grid; }
+    .room-gallery.is-multi .rg-dots { display: flex; }
 
     /* Amenities */
     .amen {
@@ -47,6 +102,10 @@
     .amen .row .label { font-family:'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
     .amen .row .name { font-family: 'Italiana', serif; font-size: 22px; margin-top: 10px; line-height: 1.1; display: block; }
     .amen .row .desc { font-size: 14px; color: var(--ink-soft); margin-top: 6px; }
+
+    /* Page header — scoped to this page */
+    .page-head .title { font-size: clamp(52px, 8vw, 124px); max-width: 24ch; line-height: 0.96; }
+    .page-head .sub { max-width: 64ch; font-size: clamp(19px, 1.45vw, 23px); line-height: 1.5; margin-top: 32px; }
 
     @media (max-width: 900px) {
       .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
@@ -62,7 +121,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <a href="index.html" class="wordmark" style="border:none">Braga Essence <span class="amp">Villa</span></a>
     <nav class="nav" aria-label="Primary">
       <a href="index.html">Overview</a>
       <a href="the-house.html">The House</a>
@@ -70,6 +129,7 @@
       <a href="house-rules.html">House Rules</a>
       <a href="explore.html">Explore</a>
       <a href="services.html">Services</a>
+      <a href="places.html">Places</a>
       <a href="contact.html">Reserve</a>
     </nav>
   </div>
@@ -80,7 +140,7 @@
     <div class="wrap">
       <span class="eyebrow">Folio II · The House</span>
       <h1 class="title display">A house of wood, light<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">&amp; long horizons.</em></h1>
-      <p class="sub">Six bedrooms. Seven baths. A heated indoor pool, a steam room, a private gym. A vaulted living room that opens to the garden, a kitchen built for long meals. Sleeps twelve, comfortably; designed for a single party of friends, family, or both.</p>
+      <p class="sub">Six bedrooms. Five bathrooms. A heated indoor pool, a steam room, a private gym. A vaulted living room that opens to the garden, a kitchen built for long meals. Sleeps twelve, comfortably; designed for a single party of friends, family, or both.</p>
     </div>
   </section>
 
@@ -92,12 +152,12 @@
         <span class="eyebrow">In passing — a gallery</span>
       </div>
       <div class="gallery">
-        <div class="photo g1"><img src="images/p17.jpg" alt="The vaulted living room opens to the garden." /><span class="ph-label">Plate 01 · Living room, looking south</span></div>
-        <div class="photo g2"><img src="images/p40.jpg" alt="The indoor heated pool, with line-drawing mural." /><span class="ph-label">Plate 02 · Indoor pool</span></div>
-        <div class="photo g3"><img src="images/p55.jpg" alt="Cobblestone drive, garden, the orange façade." /><span class="ph-label">Plate 03 · The driveway</span></div>
-        <div class="photo g4"><img src="images/p20.jpg" alt="Dining hall and chef's kitchen." /><span class="ph-label">Plate 04 · Kitchen &amp; dining</span></div>
-        <div class="photo g5"><img src="images/p01.jpg" alt="A master bedroom in soft greys and linens." /><span class="ph-label">Plate 05 · South suite</span></div>
-        <div class="photo g6"><img src="images/p50.jpg" alt="The lawn and views west over Braga." /><span class="ph-label">Plate 06 · The lawn &amp; view</span></div>
+        <div class="photo g1"><img src="images/p17.jpg" alt="The vaulted living room opens to the garden." /><span class="ph-label">Living room, looking south</span></div>
+        <div class="photo g2"><img src="images/p40.jpg" alt="The indoor heated pool, with line-drawing mural." /><span class="ph-label">Indoor pool</span></div>
+        <div class="photo g3"><img src="images/p55.jpg" alt="Cobblestone drive, garden, the orange façade." /><span class="ph-label">The driveway</span></div>
+        <div class="photo g4"><img src="images/p20.jpg" alt="Dining hall and chef's kitchen." /><span class="ph-label">Kitchen &amp; dining</span></div>
+        <div class="photo g5"><img src="images/p01.jpg" alt="A master bedroom in soft greys and linens." /><span class="ph-label">Garden suite</span></div>
+        <div class="photo g6"><img src="images/p50.jpg" alt="The lawn and views west over Braga." /><span class="ph-label">The lawn &amp; view</span></div>
       </div>
     </div>
   </section>
@@ -115,53 +175,74 @@
         <div class="room">
           <span class="num">I.</span>
           <div>
-            <h3>The South Suite</h3>
-            <p>The largest master suite — king bed in soft boucle, two walls of sheer linen onto the south garden, walk-in dressing, and an ensuite with rain shower and double basin. The room where the sun arrives first.</p>
+            <h3>The Garden Suite</h3>
+            <p>The largest master suite — king bed in soft boucle, two walls of sheer linen onto the garden, walk-in dressing, and an ensuite with rain shower and double basin. The room where the sun arrives first.</p>
             <div class="roomspec">
               <span class="chip">King bed</span><span class="chip">Ensuite</span><span class="chip">Garden doors</span><span class="chip">Walk-in</span>
             </div>
           </div>
-          <div class="photo"><img src="images/p01.jpg" alt="South Suite — king bed, sheer linen curtains, garden beyond." /><span class="ph-label">South Suite</span></div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06360-HDR.jpg" alt="Garden Suite — king bed in soft bouclé, sheer linen, light pine floor." />
+              <img src="Pictures/DSC06348-HDR-Edit.jpg" alt="Garden Suite — bedroom with air-conditioning and a free-standing television." />
+              <img src="Pictures/DSC06354-HDR-Edit.jpg" alt="Garden Suite — the bedroom and sitting area in afternoon light." />
+              <img src="Pictures/DSC06357-HDR-Edit.jpg" alt="Garden Suite — walk-in dressing room with open wardrobe and safe." />
+              <img src="Pictures/DSC06369-HDR-Edit.jpg" alt="Garden Suite — ensuite with a bathtub and basin in dark mosaic stone." />
+              <img src="Pictures/DSC06345-HDR-Edit.jpg" alt="Garden Suite — ensuite rain shower in dark stone behind a frosted sliding door." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">Garden Suite</span>
+          </div>
         </div>
 
         <div class="room">
           <span class="num">II.</span>
           <div>
-            <h3>The Garden Suite</h3>
-            <p>A second master, opening through floor-to-ceiling glass onto the lawn. King bed, ensuite with rain panel, smart TV on a pivoting arm. The quietest room in the house; best for sleepers.</p>
+            <h3>The Quiet Suite</h3>
+            <p>A second master, calm and cocooning — a wall of warm cherry panelling behind the bed, full-height sheer curtains, and an ensuite with a multi-jet shower column. The quietest room in the house; best for sleepers.</p>
             <div class="roomspec">
-              <span class="chip">King bed</span><span class="chip">Ensuite, rain</span><span class="chip">Garden doors</span>
+              <span class="chip">King bed</span><span class="chip">Ensuite</span><span class="chip">Cherry panelling</span>
             </div>
           </div>
-          <div class="photo"><img src="images/p15.jpg" alt="Garden Suite — king bed with wood-panel headboard, TV on pivot." /><span class="ph-label">Garden Suite</span></div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06378-HDR-Edit.jpg" alt="Quiet Suite — king bed, wall-mounted television, tall sheer-curtained window." />
+              <img src="Pictures/DSC06384-HDR-Edit.jpg" alt="Quiet Suite — bed against a warm cherry-wood panelled wall." />
+              <img src="Pictures/DSC06405-HDR-Edit.jpg" alt="Quiet Suite — ensuite with a multi-jet shower column behind frosted glass." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">Quiet Suite</span>
+          </div>
         </div>
 
         <div class="room">
           <span class="num">III.</span>
           <div>
-            <h3>The North Suite</h3>
-            <p>On the cool side of the house, with views into the courtyard. King bed, classical ensuite, and a small desk by the window — for the morning correspondence and the slow coffee.</p>
+            <h3>The Courtyard Room</h3>
+            <p>Wrapped in sheer linen on two sides, with a cherry-wood dressing wall and the calm of the inner courtyard. King bed and a classical ensuite — for the slow morning and the late coffee.</p>
             <div class="roomspec">
-              <span class="chip">King bed</span><span class="chip">Ensuite</span><span class="chip">Desk</span>
+              <span class="chip">King bed</span><span class="chip">Ensuite</span><span class="chip">Cherry dressing wall</span>
             </div>
           </div>
-          <div class="photo"><img src="images/p03.jpg" alt="North Suite — curved grey-boucle headboard, soft linens, full-height window." /><span class="ph-label">North Suite</span></div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06288-HDR.jpg" alt="Courtyard Room — king bed wrapped by two walls of sheer linen." />
+              <img src="Pictures/DSC06291-HDR-Edit.jpg" alt="Courtyard Room — cherry-wood wardrobe partition beside the bed." />
+              <img src="Pictures/DSC06294-HDR-Edit.jpg" alt="Courtyard Room — bed and dressing area in soft morning light." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">Courtyard Room</span>
+          </div>
         </div>
 
         <div class="room">
           <span class="num">IV.</span>
-          <div>
-            <h3>The Cherry Room</h3>
-            <p>A queen bed against a wall of warm cherry panelling, with a curved boucle headboard and a generous wardrobe. Set on the quiet wing of the house — for the writer, the romantic, the late riser.</p>
-            <div class="roomspec">
-              <span class="chip">Queen bed</span><span class="chip">Ensuite</span><span class="chip">Cherry wardrobe</span>
-            </div>
-          </div>
-          <div class="photo"><img src="images/p15.jpg" alt="Cherry Room — queen bed against cherry-wood panelling, soft floor." /><span class="ph-label">Cherry Room</span></div>
-        </div>
-
-        <div class="room">
-          <span class="num">V.</span>
           <div>
             <h3>The Twin Room</h3>
             <p>Two single beds (joinable into a super-king), generous wood wardrobes, ensuite shower. Set on the garden floor near the gym and steam room — best for friends, siblings, or older children.</p>
@@ -169,20 +250,66 @@
               <span class="chip">2 × single</span><span class="chip">or super-king</span><span class="chip">Ensuite</span><span class="chip">Garden floor</span>
             </div>
           </div>
-          <div class="photo"><img src="images/p05.jpg" alt="Twin Room — two single beds and warm wood cabinetry." /><span class="ph-label">Twin Room</span></div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06309-HDR-Edit.jpg" alt="Twin Room — two single beds joinable into a super-king, soft grey headboard." />
+              <img src="Pictures/DSC06315-HDR-Edit.jpg" alt="Twin Room — twin beds with wood wardrobes alongside." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">Twin Room</span>
+          </div>
         </div>
 
         <div class="room">
-          <span class="num">VI.</span>
+          <span class="num">V.</span>
           <div>
-            <h3>The Twin Guest Room</h3>
-            <p>A second twin, with a long upholstered headboard spanning both beds. Generous storage, ensuite, sheer linen at the window. A good room for two adults or two older children sharing.</p>
+            <h3>The Pool Suite</h3>
+            <p>On the garden floor, with its own doors onto the covered porch and the indoor pool just beyond. The bedroom opens to a private lounge — a deep sofa, a large screen and Sonos — the house's own small cinema. For the couple who want the water at their doorstep, or the family film night that runs late.</p>
             <div class="roomspec">
-              <span class="chip">2 × single</span><span class="chip">Long headboard</span><span class="chip">Ensuite</span>
+              <span class="chip">King bed</span><span class="chip">Private lounge</span><span class="chip">Cinema screen</span><span class="chip">Pool porch</span><span class="chip">Floor 0</span>
             </div>
           </div>
-          <div class="photo"><img src="images/p04.jpg" alt="Twin Guest Room — two singles with long upholstered headboard." /><span class="ph-label">Twin Guest Room</span></div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06565-HDR-Edit.jpg" alt="Pool Suite — garden-level bedroom with clerestory light." />
+              <img src="Pictures/DSC06538-HDR-Edit.jpg" alt="Pool Suite — the private cinema lounge, deep sofa and screen." />
+              <img src="Pictures/DSC06553-HDR-Edit.jpg" alt="Pool Suite — dressing corridor between the bedroom and ensuite." />
+              <img src="Pictures/DSC06559-HDR-Edit.jpg" alt="Pool Suite — ensuite with walk-in shower." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">The Pool Suite</span>
+          </div>
         </div>
+
+        <div class="room unit">
+          <span class="num">VI.</span>
+          <div>
+            <span class="eyebrow" style="display:block; margin-bottom:12px;">A separate annex</span>
+            <h3>The Guest House</h3>
+            <p>A self-contained guest house in the garden, with its own front door. A full kitchen with a wood-fired grill, a bathroom, and a glass-walled living room that opens onto a deep covered terrace — the valley laid out beyond. The sofa opens to a double bed. For staff, grandparents, or guests who like their own key.</p>
+            <div class="roomspec">
+              <span class="chip">Private entrance</span><span class="chip">Full kitchen</span><span class="chip">Bathroom</span><span class="chip">Living room</span><span class="chip">Covered terrace</span><span class="chip">Sleeps 2</span>
+            </div>
+          </div>
+          <div class="room-gallery">
+            <div class="rg-track">
+              <img src="Pictures/DSC06758-HDR.jpg" alt="The Guest House — a glass pavilion in the garden, the valley beyond." />
+              <img src="Pictures/DSC06852-HDR-Edit.jpg" alt="The Guest House — living room with television, opening to the terrace." />
+              <img src="Pictures/DSC06653-HDR-Edit.jpg" alt="The Guest House — kitchen with a wood-fired grill and granite island." />
+              <img src="Pictures/DSC06674-HDR-Edit.jpg" alt="The Guest House — bathroom in black glass, opening to the deck." />
+              <img src="Pictures/DSC06719-HDR-Edit.jpg" alt="The Guest House — covered terrace with a long table and the valley view." />
+            </div>
+            <button class="rg-btn rg-prev" type="button" aria-label="Previous photo">‹</button>
+            <button class="rg-btn rg-next" type="button" aria-label="Next photo">›</button>
+            <div class="rg-dots"></div>
+            <span class="ph-label">The Guest House</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -197,19 +324,19 @@
       <h2 style="max-width: 18ch; margin-bottom: 48px;">Pool, steam, gym — all under one quiet roof.</h2>
       <div class="triptych" style="display:grid; grid-template-columns: 1.4fr 0.8fr 0.8fr; gap: 28px;">
         <div>
-          <div class="photo" style="aspect-ratio: 4/3; margin-bottom: 16px;"><img src="images/p40.jpg" alt="Indoor heated pool, line-drawing mural and warm pine bench." /><span class="ph-label">Plate · The pool</span></div>
+          <div class="photo" style="aspect-ratio: 4/3; margin-bottom: 16px;"><img src="images/p40.jpg" alt="Indoor heated pool, line-drawing mural and warm pine bench." /><span class="ph-label">The pool</span></div>
           <span class="meta" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);">Indoor · heated · 12 m</span>
           <h3 style="font-size: 32px; margin: 8px 0 8px;">The pool.</h3>
           <p style="color: var(--ink-soft);">A heated indoor pool, daylight ceiling, with two loungers, a deep bench and a small wading area. Swimmable any month of the year.</p>
         </div>
         <div>
-          <div class="photo" style="aspect-ratio: 4/5; margin-bottom: 16px;"><img src="images/p35.jpg" alt="Steam room with blue mosaic tile." /><span class="ph-label">Plate · Steam</span></div>
+          <div class="photo" style="aspect-ratio: 4/5; margin-bottom: 16px;"><img src="images/p35.jpg" alt="Steam room with blue mosaic tile." /><span class="ph-label">Steam</span></div>
           <span class="meta" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);">Steam · mosaic</span>
           <h3 style="font-size: 28px; margin: 8px 0 8px;">The steam room.</h3>
           <p style="color: var(--ink-soft); font-size: 16px;">Hand-laid mosaic. Eucalyptus reservoir below the bench. Rain shower opposite, for between sessions.</p>
         </div>
         <div>
-          <div class="photo" style="aspect-ratio: 4/5; margin-bottom: 16px;"><img src="images/p38.jpg" alt="Private gym — treadmill, bike and weight machine." /><span class="ph-label">Plate · Gym</span></div>
+          <div class="photo" style="aspect-ratio: 4/5; margin-bottom: 16px;"><img src="images/p38.jpg" alt="Private gym — treadmill, bike and weight machine." /><span class="ph-label">Gym</span></div>
           <span class="meta" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);">Gym · cardio + cables</span>
           <h3 style="font-size: 28px; margin: 8px 0 8px;">The gym.</h3>
           <p style="color: var(--ink-soft); font-size: 16px;">Treadmill, upright bike, cable machine, free weights. A wall-mounted screen and Sonos zone for the morning routine.</p>
@@ -235,7 +362,7 @@
 
         <div class="row"><span class="label">Sound</span><span class="name">Sonos, House-wide</span><span class="desc">Independent zones, gardens included.</span></div>
         <div class="row"><span class="label">Screen</span><span class="name">Smart TVs in Every Room</span><span class="desc">Sign in to your own Netflix, Apple TV+, Prime.</span></div>
-        <div class="row"><span class="label">Play</span><span class="name">Xbox + Board Games</span><span class="desc">In the playroom, behind the living wall.</span></div>
+        <div class="row"><span class="label">Play</span><span class="name">Xbox</span><span class="desc">In the playroom, behind the living wall.</span></div>
         <div class="row"><span class="label">Network</span><span class="name">1 Gbit Fibre Wi-Fi</span><span class="desc">Mesh, full coverage incl. gardens.</span></div>
 
         <div class="row"><span class="label">Climate</span><span class="name">A/C &amp; Heating</span><span class="desc">Daikin splits, hydronic underfloor.</span></div>
@@ -259,16 +386,16 @@
         <span class="eyebrow">Specifications</span>
       </div>
       <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start;">
-        <div class="photo wide"><img src="images/p61.jpg" alt="A rear corner of the villa, the orange wood cladding under late sun." /><span class="ph-label">Plate · The west façade</span></div>
+        <div class="photo wide"><img src="images/p61.jpg" alt="A rear corner of the villa, the orange wood cladding under late sun." /><span class="ph-label">The west façade</span></div>
         <dl class="spec">
-          <dt>Address</dt><dd>Rua dos Matos 21, Braga</dd>
+          <dt>Address</dt><dd>Rua dos Braga 21, Braga</dd>
           <dt>Parish</dt><dd>São Pedro de Este</dd>
           <dt>Type</dt><dd>Contemporary detached villa</dd>
           <dt>Grounds</dt><dd>1.4 hectares, walled &amp; gated</dd>
-          <dt>Sleeps</dt><dd>12 (6 BR / 7 BA)</dd>
+          <dt>Sleeps</dt><dd>12 (6 BR / 5 BA)</dd>
           <dt>Indoor pool</dt><dd>12 m, heated, year-round</dd>
           <dt>Children</dt><dd>Welcome, all ages</dd>
-          <dt>Pets</dt><dd>On request</dd>
+          <dt>Pets</dt><dd>Not allowed</dd>
           <dt>Smoking</dt><dd>Outdoor only</dd>
         </dl>
       </div>
@@ -291,16 +418,63 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <div class="word-big">Braga Essence<br /><em>Villa</em></div>
         <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
       </div>
       <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
       <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
-      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="https://www.airbnb.com/rooms/1665858564801488979?guests=1&amp;adults=1&amp;s=67&amp;unique_share_id=2749985d-c7de-4b66-b914-62bfa663e3e7" target="_blank" rel="noopener">Airbnb Listing</a><a href="mailto:nir.erlich@gmail.com">nir.erlich@gmail.com</a></div>
     </div>
-    <div class="foot-base"><span>© 2026 Matos Essence Villa · Rua dos Matos 21, Braga</span><span>São Pedro de Este · Minho · Portugal</span></div>
+    <div class="foot-base"><span>© 2026 Braga Essence Villa · Rua dos Braga 21, Braga</span><span>São Pedro de Este · Minho · Portugal</span></div>
   </div>
 </footer>
+
+<script>
+(function () {
+  function initGallery(g) {
+    var track = g.querySelector('.rg-track');
+    if (!track) return;
+    var imgs = track.querySelectorAll('img');
+    var n = imgs.length;
+    if (n < 2) return; // single photo — no controls
+    g.classList.add('is-multi');
+    var dotsWrap = g.querySelector('.rg-dots');
+    var prev = g.querySelector('.rg-prev');
+    var next = g.querySelector('.rg-next');
+    var dots = [];
+    var index = 0;
+    function go(i) {
+      index = (i % n + n) % n;
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      dots.forEach(function (b, j) { b.classList.toggle('active', j === index); });
+    }
+    if (dotsWrap) {
+      imgs.forEach(function (_, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+        b.addEventListener('click', function () { go(i); });
+        dotsWrap.appendChild(b);
+        dots.push(b);
+      });
+    }
+    if (prev) prev.addEventListener('click', function () { go(index - 1); });
+    if (next) next.addEventListener('click', function () { go(index + 1); });
+    // swipe / drag
+    var x0 = null;
+    track.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+    window.addEventListener('pointerup', function (e) {
+      if (x0 === null) return;
+      var dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) go(dx < 0 ? index + 1 : index - 1);
+    });
+    go(0);
+  }
+  function initAll() { document.querySelectorAll('.room-gallery').forEach(initGallery); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+  else initAll();
+})();
+</script>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>

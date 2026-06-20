@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Matos Essence Villa — A private villa in Braga, Portugal</title>
+  <title>Braga Essence Villa — A private villa in Braga, Portugal</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,36 +20,50 @@
     .hero .meta-line .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
 
     .hero-main {
-      display: grid; grid-template-columns: 1.15fr 0.85fr;
-      gap: 56px; padding: 56px 0 32px; align-items: end;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      grid-template-areas: "title lede" "tag cta";
+      column-gap: clamp(40px, 5vw, 96px);
+      row-gap: clamp(22px, 2.4vw, 44px);
+      padding: 44px 0 40px; align-items: start;
     }
+    .hero-title { grid-area: title; max-width: 100%; }
     .hero h1 {
-      font-size: clamp(60px, 11vw, 180px);
-      line-height: 0.86; letter-spacing: -0.01em; margin-bottom: 0;
+      font-size: clamp(64px, 7.4vw, 120px);
+      line-height: 0.92; letter-spacing: -0.01em; margin: 0;
     }
     .hero h1 .num {
       font-family: 'Italiana', serif; color: var(--accent);
       font-style: normal;
     }
-    .hero h1 .small {
+    .hero-tagline {
+      grid-area: tag; margin: 0; align-self: end;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic; font-weight: 400;
-      font-size: 0.36em; color: var(--ink-soft);
-      letter-spacing: 0.005em; display: block;
-      margin-top: 14px;
+      font-size: clamp(26px, 2.9vw, 46px);
+      color: var(--ink-soft);
+      letter-spacing: 0.005em; line-height: 1.04;
+      max-width: none;
     }
     .hero .standfirst {
+      grid-area: lede; align-self: start; margin: 0;
+      padding-top: clamp(4px, 0.6vw, 12px);
       font-size: clamp(20px, 1.6vw, 26px);
-      line-height: 1.45; color: var(--ink-soft);
-      max-width: 38ch; font-style: italic;
+      line-height: 1.5; color: var(--ink-soft);
+      max-width: none; font-style: italic;
     }
     .hero .standfirst .drop {
       font-family: 'Italiana', serif;
       font-size: 1.4em; font-style: normal; color: var(--accent);
     }
+    .hero-actions {
+      grid-area: cta; align-self: end;
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin: 0;
+    }
 
     .hero-photo {
-      position: relative; margin: 24px 0 0;
+      position: relative; margin: 8px 0 0;
       aspect-ratio: 21 / 9; border: 1px solid var(--rule);
       overflow: hidden;
     }
@@ -147,7 +161,15 @@
     .cta-actions { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
     @media (max-width: 900px) {
-      .hero-main { grid-template-columns: 1fr; gap: 24px; }
+      .hero-main {
+        grid-template-columns: 1fr;
+        grid-template-areas: "title" "tag" "lede" "cta";
+        row-gap: 20px;
+      }
+      .hero-title { max-width: none; }
+      .hero .standfirst { padding-top: 0; }
+      .hero-tagline { align-self: start; max-width: none; }
+      .hero-actions { align-self: start; }
       .triptych { grid-template-columns: 1fr; }
       .split { grid-template-columns: 1fr; gap: 32px; }
       .dossier { grid-template-columns: 1fr 1fr; }
@@ -161,7 +183,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="index.html" class="wordmark" style="border:none">Matos Essence <span class="amp">Villa</span></a>
+    <a href="index.html" class="wordmark" style="border:none">Braga Essence <span class="amp">Villa</span></a>
     <nav class="nav" aria-label="Primary">
       <a href="index.html">Overview</a>
       <a href="the-house.html">The House</a>
@@ -169,6 +191,7 @@
       <a href="house-rules.html">House Rules</a>
       <a href="explore.html">Explore</a>
       <a href="services.html">Services</a>
+      <a href="places.html">Places</a>
       <a href="contact.html">Reserve</a>
     </nav>
   </div>
@@ -184,36 +207,30 @@
       </div>
 
       <div class="hero-main">
-        <div>
-          <h1 class="display">
-            Matos Essence<br />Villa
-            <span class="small">a private villa, on the green hill of Braga</span>
-          </h1>
-        </div>
-        <div>
-          <p class="standfirst">
-            <span class="drop">A</span> contemporary house of wood, light and water — between the cathedral spires of Braga, the granite of Sameiro, and the slow bend of the Cávado. A house for long mornings, long tables, and the slow choreography of a Portuguese summer.
-          </p>
-          <div style="display:flex; gap:12px; margin-top: 28px; flex-wrap:wrap;">
-            <a href="contact.html" class="btn primary">Reserve the villa <span class="arrow">→</span></a>
-            <a href="the-house.html" class="btn">Tour the house</a>
-          </div>
+        <h1 class="display hero-title">Braga Essence<br />Villa</h1>
+        <p class="standfirst">
+          <span class="drop">A</span> contemporary house of wood, light and water — between the cathedral spires of Braga, the granite of Sameiro, and the slow bend of the Cávado. A house for long mornings, long tables, and the slow choreography of a Portuguese summer.
+        </p>
+        <p class="hero-tagline">a private villa, on the green hill of Braga</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn primary">Reserve the villa <span class="arrow">→</span></a>
+          <a href="the-house.html" class="btn">Tour the house</a>
         </div>
       </div>
 
       <div class="hero-photo">
-        <img src="images/p17.jpg" alt="The living room of Matos Essence Villa — vaulted wood ceiling, light pine floor, garden beyond." />
+        <img src="images/p17.jpg" alt="The living room of Braga Essence Villa — vaulted wood ceiling, light pine floor, garden beyond." />
         <div class="overlay">
-          <span class="meta">Plate 01 · The Living Room</span>
+          <span class="meta">The Living Room</span>
           afternoon light, looking south to the garden
         </div>
-        <span class="credit">[ Matos Essence Villa ]</span>
+        <span class="credit">[ Braga Essence Villa ]</span>
       </div>
 
       <div class="hero-coords">
-        <span>Rua dos Matos 21, Braga</span>
+        <span>Rua dos Braga 21, Braga</span>
         <span>São Pedro de Este</span>
-        <span>Six suites · Sleeps twelve</span>
+        <span>Six bedrooms · Five bathrooms · Sleeps twelve</span>
         <span>Indoor heated pool · Steam · Gym</span>
       </div>
     </div>
@@ -230,11 +247,11 @@
         <div class="cell">
           <span class="label">Bedrooms</span>
           <span class="val">06</span>
-          <span class="sub">three king suites, a twin, a queen, a children's room</span>
+          <span class="sub">four king suites, a twin and a queen room</span>
         </div>
         <div class="cell">
           <span class="label">Bathrooms</span>
-          <span class="val">07</span>
+          <span class="val">05</span>
           <span class="sub">stone, glass and pine, rain showers throughout</span>
         </div>
         <div class="cell">
@@ -260,19 +277,19 @@
       </div>
       <div class="triptych">
         <div class="feature">
-          <div class="photo"><img src="images/p40.jpg" alt="Indoor heated pool with a line-drawing mural and pale wood bench." /><span class="ph-label">Plate 02 · Indoor pool</span></div>
+          <div class="photo"><img src="images/p40.jpg" alt="Indoor heated pool with a line-drawing mural and pale wood bench." /><span class="ph-label">Indoor pool</span></div>
           <span class="label">The Water</span>
           <h3>An indoor pool, year-round.</h3>
           <p>Twelve metres of still, heated water under a soft daylight ceiling. A steam room and rain shower are set into the adjacent wing — for the cool hours, and the warm ones.</p>
         </div>
         <div class="feature">
-          <div class="photo"><img src="images/p20.jpg" alt="The kitchen and dining room of Matos Essence Villa — bamboo ceiling, long table, valley views." /><span class="ph-label">Plate 03 · Kitchen &amp; dining</span></div>
+          <div class="photo"><img src="images/p20.jpg" alt="The kitchen and dining room of Braga Essence Villa — bamboo ceiling, long table, valley views." /><span class="ph-label">Kitchen &amp; dining</span></div>
           <span class="label">The Table</span>
           <h3>A kitchen built for long meals.</h3>
           <p>Twin ovens, a six-burner range with hood, a Sub-Zero, a marble island. A dining table that seats ten, with a low window onto the valley. The chef arrives with the season's market by ten.</p>
         </div>
         <div class="feature">
-          <div class="photo"><img src="images/p19.jpg" alt="Open living room with curved sofa, wood-burning stove and floor-to-ceiling glass to the garden." /><span class="ph-label">Plate 04 · The living room</span></div>
+          <div class="photo"><img src="images/p19.jpg" alt="Open living room with curved sofa, wood-burning stove and floor-to-ceiling glass to the garden." /><span class="ph-label">The living room</span></div>
           <span class="label">The Quiet</span>
           <h3>Rooms made for the slow afternoon.</h3>
           <p>A wood-burning stove at the centre, a curved velvet sectional, a Sonos zone in every room. Stay in. The world will wait.</p>
@@ -289,10 +306,10 @@
         <span class="eyebrow">The Setting</span>
       </div>
       <div class="split">
-        <div class="photo"><img src="images/p50.jpg" alt="The villa from across the lawn — orange wood-clad façade, hills of Braga in the distance." /><span class="ph-label">Plate 05 · The lawn, looking back</span></div>
+        <div class="photo"><img src="images/p50.jpg" alt="The villa from across the lawn — orange wood-clad façade, hills of Braga in the distance." /><span class="ph-label">The lawn, looking back</span></div>
         <div class="copy">
           <h2>São Pedro de Este,<br /><em style="font-family:'Cormorant Garamond';color:var(--accent);">on the green side of Braga.</em></h2>
-          <p class="dropcap">Rua dos Matos rises on the eastern hillside of Braga, in the small parish of São Pedro de Este — five minutes from the city centre, ten from the baroque stair of Bom Jesus, twenty from the granite outcrops of Sameiro. The Minho rolls north, vineyards to the Atlantic, Gerês climbing east. The villa sits in the middle of it.</p>
+          <p class="dropcap">Rua dos Braga rises on the eastern hillside of Braga, in the small parish of São Pedro de Este — five minutes from the city centre, ten from the baroque stair of Bom Jesus, twenty from the granite outcrops of Sameiro. The Minho rolls north, vineyards to the Atlantic, Gerês climbing east. The villa sits in the middle of it.</p>
           <div class="pullquote">
             "Five minutes from the cathedral, an hour from the Douro, a country away from everywhere."
           </div>
@@ -329,10 +346,10 @@
     <div class="wrap">
       <span class="eyebrow">An invitation</span>
       <h2 style="margin-top: 18px;"><em style="font-family:'Cormorant Garamond';color:var(--accent);">Come, &amp;</em> stay a while.</h2>
-      <p class="lede" style="margin: 0 auto 36px; text-align:center;">Direct inquiry receives the best rate, our full concierge, and the chef's menu on arrival.</p>
+      <p class="lede" style="margin: 0 auto 36px; text-align:center;">Direct inquiry receives the best rate.</p>
       <div class="cta-actions">
         <a href="contact.html" class="btn primary">Direct Inquiry <span class="arrow">→</span></a>
-        <a href="contact.html" class="btn">View on Airbnb</a>
+        <a href="https://www.airbnb.com/rooms/1665858564801488979?guests=1&amp;adults=1&amp;s=67&amp;unique_share_id=2749985d-c7de-4b66-b914-62bfa663e3e7" class="btn" target="_blank" rel="noopener">View on Airbnb</a>
       </div>
     </div>
   </section>
@@ -342,14 +359,14 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="word-big">Matos Essence<br /><em>Villa</em></div>
+        <div class="word-big">Braga Essence<br /><em>Villa</em></div>
         <p class="soft" style="margin-top:18px; max-width: 32ch;">A private villa in São Pedro de Este, Braga — minutes from the cathedral, the Cávado valley and the Gerês mountains.</p>
       </div>
       <div><h5>The Estate</h5><a href="the-house.html">The House</a><a href="guest-guide.html">Guest Guide</a><a href="house-rules.html">House Rules</a><a href="explore.html">Things To Do</a></div>
       <div><h5>Concierge</h5><a href="services.html">Private Chef</a><a href="services.html">Private Driver</a><a href="services.html">Events</a></div>
-      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="contact.html">Airbnb Listing</a><a href="mailto:stay@matos21.pt">stay@matos21.pt</a></div>
+      <div><h5>Visit</h5><a href="contact.html">Direct Inquiry</a><a href="https://www.airbnb.com/rooms/1665858564801488979?guests=1&amp;adults=1&amp;s=67&amp;unique_share_id=2749985d-c7de-4b66-b914-62bfa663e3e7" target="_blank" rel="noopener">Airbnb Listing</a><a href="mailto:nir.erlich@gmail.com">nir.erlich@gmail.com</a></div>
     </div>
-    <div class="foot-base"><span>© 2026 Matos Essence Villa · Rua dos Matos 21, Braga</span><span>São Pedro de Este · Minho · Portugal</span></div>
+    <div class="foot-base"><span>© 2026 Braga Essence Villa · Rua dos Braga 21, Braga</span><span>São Pedro de Este · Minho · Portugal</span></div>
   </div>
 </footer>
 
